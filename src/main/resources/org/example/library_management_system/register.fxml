@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.library_management_system.RegisterController"
+           alignment="CENTER">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <!-- Centered VBox for registration form with increased spacing for better readability -->
+    <VBox alignment="CENTER" spacing="12.0" prefWidth="320.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
+        <!-- Title text with margin and adjusted font size -->
+        <Text text="Create Your Account" style="-fx-fill: #333333;">
+            <font>
+                <Font name="Arial Bold" size="22.0"/>
+            </font>
+        </Text>
+
+        <!-- Subtitle for better context -->
+        <Text text="Join the Library Management System" style="-fx-fill: #555555;">
+            <font>
+                <Font name="Arial" size="14.0"/>
+            </font>
+        </Text>
+
+        <!-- Form fields with labels and input fields grouped together for consistent alignment -->
+        <VBox alignment="CENTER" spacing="8.0" prefWidth="260.0">
+            <!-- First Name Field -->
+            <Label text="First Name" style="-fx-text-fill: #555555;"/>
+            <TextField fx:id="firstNameField" promptText="Enter your first name" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+
+            <!-- Last Name Field -->
+            <Label text="Last Name" style="-fx-text-fill: #555555;"/>
+            <TextField fx:id="lastNameField" promptText="Enter your last name" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+
+            <!-- Contact Information Field -->
+            <Label text="Contact Information" style="-fx-text-fill: #555555;"/>
+            <TextField fx:id="contactField" promptText="Enter your contact number" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+
+            <!-- Email Field -->
+            <Label text="Email" style="-fx-text-fill: #555555;"/>
+            <TextField fx:id="emailField" promptText="Enter your email" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+
+            <!-- Password Field -->
+            <Label text="Password" style="-fx-text-fill: #555555;"/>
+            <PasswordField fx:id="passwordField" promptText="Enter your password" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+        </VBox>
+
+        <!-- Register Button with increased padding and a bold style -->
+        <Button text="Register" fx:id="registerButton" onAction="#handleRegister" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+    </VBox>
+</StackPane>

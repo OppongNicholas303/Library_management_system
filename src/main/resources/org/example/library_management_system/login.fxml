@@ -11,29 +11,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.library_management_system.LibraryLoginController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.library_management_system.LibraryLoginController"
+           alignment="CENTER">
     <padding>
         <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
     </padding>
 
-    <!-- Centered VBox for login form -->
-    <VBox alignment="CENTER" spacing="15.0" prefWidth="300.0">
-        <!-- Title text -->
-        <Text text="Login to Library Management System">
+    <!-- Centered VBox for login form with increased spacing for better readability -->
+    <VBox alignment="CENTER" spacing="12.0" prefWidth="320.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
+        <!-- Title text with margin and adjusted font size -->
+        <Text text="Login to Library Management System" style="-fx-fill: #333333;">
             <font>
-                <Font size="20.0"/>
+                <Font name="Arial Bold" size="22.0"/>
             </font>
         </Text>
 
-        <!-- Username Field -->
-        <Label text="Username"/>
-        <TextField fx:id="usernameField" promptText="Enter your username" maxWidth="200.0"/>
+        <!-- Form fields with labels and input fields grouped together for consistent alignment -->
+        <VBox alignment="CENTER" spacing="8.0" prefWidth="260.0">
+            <!-- Username Field -->
+            <Label text="Username" style="-fx-text-fill: #555555;"/>
+            <TextField fx:id="usernameField" promptText="Enter your username" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
 
-        <!-- Password Field -->
-        <Label text="Password"/>
-        <PasswordField fx:id="passwordField" promptText="Enter your password" maxWidth="200.0"/>
+            <!-- Password Field -->
+            <Label text="Password" style="-fx-text-fill: #555555;"/>
+            <PasswordField fx:id="passwordField" promptText="Enter your password" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+        </VBox>
 
-        <!-- Login Button -->
-        <Button text="Login" fx:id="loginButton" onAction="#handleLogin" prefWidth="100.0"/>
+        <!-- Login Button with increased padding and a bold style -->
+        <Button text="Login" fx:id="loginButton" onAction="#handleLogin" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
     </VBox>
 </StackPane>
