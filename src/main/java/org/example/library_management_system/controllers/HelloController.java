@@ -1,4 +1,4 @@
-package org.example.library_management_system;
+package org.example.library_management_system.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

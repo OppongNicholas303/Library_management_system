@@ -10,7 +10,11 @@ module org.example.library_management_system {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
+    requires spring.security.crypto;
 
     opens org.example.library_management_system to javafx.fxml;
     exports org.example.library_management_system;
+    exports org.example.library_management_system.controllers;
+    opens org.example.library_management_system.controllers to javafx.fxml;
 }
