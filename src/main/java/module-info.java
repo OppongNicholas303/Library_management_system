@@ -11,7 +11,8 @@ module org.example.library_management_system {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
-    requires spring.security.crypto;
+    requires jbcrypt;
+
 
     opens org.example.library_management_system to javafx.fxml;
     exports org.example.library_management_system;

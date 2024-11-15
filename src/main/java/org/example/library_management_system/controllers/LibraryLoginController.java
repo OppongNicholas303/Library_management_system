@@ -32,7 +32,7 @@ public class LibraryLoginController {
         String password = passwordField.getText();
 
         if(email.isEmpty() || password.isEmpty()){
-            showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
+            helper.showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
         } else {
             Connection connection = DatabaseConnection.getConnection();
             String query = "SELECT * FROM librarian WHERE email = ? ";
@@ -49,7 +49,7 @@ public class LibraryLoginController {
 
                     boolean isValidPassword = helper.comparePassword(password, resultSet.getString("password"));
 
-                    if (isValidPassword) showAlert(AlertType.INFORMATION, "Login", "Success.");;
+                    if (isValidPassword) helper.showAlert(AlertType.INFORMATION, "Login", "Success.");;
 
                 }
 
@@ -68,12 +68,4 @@ public class LibraryLoginController {
 //        }
     }
 
-    // Utility method to show alert dialogs
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

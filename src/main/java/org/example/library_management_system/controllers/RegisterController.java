@@ -48,9 +48,9 @@ public class RegisterController {
 
         // Basic validation and feedback (replace with your actual registration logic)
         if (firstName.isEmpty() || lastName.isEmpty() || contact.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
+            helper.showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
         } else if(!validation.isValidEmail(email) || ! validation.isValidContact(contact)){
-            showAlert(AlertType.ERROR, "Mismatch input", "Check your inputs");
+            helper.showAlert(AlertType.ERROR, "Mismatch input", "Check your inputs");
         }
         else {
             try {
@@ -72,7 +72,7 @@ public class RegisterController {
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result);
                 if(result > 0){
-                    showAlert(AlertType.INFORMATION, "Registration Successful", "Welcome, " + firstName + " " + lastName + "!");
+                    helper.showAlert(AlertType.INFORMATION, "Registration Successful", "Welcome, " + firstName + " " + lastName + "!");
                 }else {
                     System.out.println("fail");
                 }
@@ -84,12 +84,5 @@ public class RegisterController {
         }
     }
 
-    // Utility method to show alert dialogs
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }
