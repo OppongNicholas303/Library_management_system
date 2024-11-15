@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
 
         stage.setMaximized(true);  // Set the window to open maximized
-        stage.show();gi
+        stage.show();
     }
 
     public static void main(String[] args) {
