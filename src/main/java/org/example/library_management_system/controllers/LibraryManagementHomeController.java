@@ -1,4 +1,4 @@
-package org.example.library_management_system;
+package org.example.library_management_system.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,21 +6,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.example.library_management_system.utils.Helper;
 
 import java.io.IOException;
 
 public class LibraryManagementHomeController {
-
+    Helper helper = new Helper();
     @FXML
     private void handleLogin(ActionEvent event) {
         // Load the Login page FXML
         try {
             // Create a new FXMLLoader instance and load the login.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/library_management_system/login.fxml"));
             StackPane loginPage = loader.load();  // Load the login page
 
             // Get the current stage (from the event or elsewhere)
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            helper.setWidthAndHeight(stage);
 
             // Create a new scene with the login page and set it as the stage
             Scene loginScene = new Scene(loginPage);
@@ -37,12 +40,12 @@ public class LibraryManagementHomeController {
         // Load the SignUp page FXML
         try {
             // Create a new FXMLLoader instance and load the signup.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/library_management_system/register.fxml"));
             StackPane signupPage = loader.load();  // Load the sign-up page
 
             // Get the current stage (from the event or elsewhere)
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
+            helper.setWidthAndHeight(stage);
             // Create a new scene with the sign-up page and set it as the stage
             Scene signupScene = new Scene(signupPage);
             stage.setScene(signupScene);  // Set the new scene

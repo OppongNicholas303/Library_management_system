@@ -6,13 +6,16 @@ public class User {
     private String lastName;
     private String contactInfo;
     private String email;
+    private String role;
 
-    public User(String firstName, String lastName, String contactInfo, String email) {
+    public User(String firstName, String lastName, String contactInfo, String email, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.contactInfo = contactInfo;
         this.email = email;
+        this.role = role;
     }
+
 
     public int getId() {
         return id;
@@ -48,5 +51,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,4 +1,4 @@
-package org.example.library_management_system;
+package org.example.library_management_system.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.library_management_system.dbconnection.DatabaseConnection;
+import org.example.library_management_system.utils.Helper;
+import org.example.library_management_system.utils.Validation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +35,8 @@ public class RegisterController {
 
     // Handle the register action
     @FXML
+    Helper helper = new Helper();
+    @FXML
     private void handleRegister() {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
@@ -40,19 +44,26 @@ public class RegisterController {
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
+        Validation validation = new Validation();
+
         // Basic validation and feedback (replace with your actual registration logic)
         if (firstName.isEmpty() || lastName.isEmpty() || contact.isEmpty() || email.isEmpty() || password.isEmpty()) {
             showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
-        } else {
+        } else if(!validation.isValidEmail(email) || ! validation.isValidContact(contact)){
+            showAlert(AlertType.ERROR, "Mismatch input", "Check your inputs");
+        }
+        else {
             try {
                 Connection connection = DatabaseConnection.getConnection();
                 String query = "INSERT INTO librarian (firstName, lastName, contactInfo,  password, email, employeeId) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
 
+                String hashedPassword = helper.hashPassword(password);
+
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, contact);
-                preparedStatement.setString(4, password);
+                preparedStatement.setString(4, hashedPassword);
                 preparedStatement.setString(5, email);
                 preparedStatement.setString(6, "employeeID");
 
