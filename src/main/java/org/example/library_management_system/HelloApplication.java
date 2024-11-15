@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.setMaximized(true);  // Set the window to open maximized
-        stage.show();
+        stage.show();gi
     }
 
     public static void main(String[] args) {
