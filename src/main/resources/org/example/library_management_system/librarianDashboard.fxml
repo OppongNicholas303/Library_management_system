@@ -22,6 +22,7 @@
             <Button text="Patrons" fx:id="patronsButton" onAction="#handlePatronsTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Add Patron" fx:id="addPatronButton" onAction="#handleAddPatronTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Add Book" fx:id="addBookButton" onAction="#handleAddBookTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
+            <Button text="Add Magazine" fx:id="addMagazineButton" onAction="#handleAddMagazineTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
         </VBox>
     </left>
 

@@ -36,7 +36,7 @@
         <!-- Form fields with labels and input fields grouped together for consistent alignment -->
         <VBox alignment="CENTER" spacing="8.0" prefWidth="260.0">
             <!-- First Name Field -->
-            <Label text="First Name" style="-fx-text-fill: #555555;"/>
+            <Label text="First Name" style="-fx-text-fill: #555555;" alignment="TOP_LEFT"/>
             <TextField fx:id="firstNameField" promptText="Enter your first name" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
 
             <!-- Last Name Field -->

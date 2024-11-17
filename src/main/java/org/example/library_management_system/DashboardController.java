@@ -1,9 +1,11 @@
 package org.example.library_management_system;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 public class DashboardController {
 
+    public Button addMagazineButton;
     @FXML
     private StackPane contentArea;
 
@@ -52,6 +55,10 @@ public class DashboardController {
         displayContent("/org/example/library_management_system/addBook.fxml");
     }
 
+    public void handleAddMagazineTab(ActionEvent actionEvent) {
+        displayContent("/org/example/library_management_system/magazine.fxml");
+    }
+
     private void displayContent(String fxmlPath) {
         try {
             contentArea.getChildren().clear();
@@ -64,6 +71,7 @@ public class DashboardController {
         }
     }
 
+
     // Utility method to show alerts
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -72,5 +80,6 @@ public class DashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 
 }

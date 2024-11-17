@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.example.library_management_system.dbconnection.DatabaseConnection;
+import org.example.library_management_system.database.DatabaseConnection;
 import org.example.library_management_system.utils.Helper;
 
 import java.sql.Connection;
