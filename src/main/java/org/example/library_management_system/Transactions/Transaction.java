@@ -1,31 +1,81 @@
 package org.example.library_management_system.Transactions;
 
-import org.example.library_management_system.entities.LibraryItem;
-import org.example.library_management_system.entities.Patron;
-
-import java.util.Date;
+import java.time.LocalDate;
+import java.sql.Date;
 
 public class Transaction {
     private int transactionId;
-    private Patron patron;
-    private LibraryItem item;
+    private int patronId;
+    private int itemId;
     private String transactionType; // borrow or return
-    private Date transactionDate;
-    private Date dueDate;
+    private Date transactionDate; // Use LocalDate for handling dates
+    private Date dueDate; // Use LocalDate for handling dates
     private boolean returned;
 
     // Constructor
-    public Transaction(int transactionId, Patron patron, LibraryItem item, String transactionType, Date transactionDate, Date dueDate) {
-        this.transactionId = transactionId;
-        this.patron = patron;
-        this.item = item;
+    public Transaction(int patronId, int itemId, String transactionType, Date transactionDate, Date dueDate, boolean returned) {
+        this.patronId = patronId;
+        this.itemId = itemId;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.dueDate = dueDate;
-        this.returned = false;
+        this.returned = returned;
     }
 
     // Getters and Setters
-    // Add methods to calculate fines, etc.
-}
+    public int getTransactionId() {
+        return transactionId;
+    }
 
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public int getPatronId() {
+        return patronId;
+    }
+
+    public void setPatronId(int patronId) {
+        this.patronId = patronId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public boolean isReturned() {
+        return returned;
+    }
+
+    public void setReturned(boolean returned) {
+        this.returned = returned;
+    }
+}

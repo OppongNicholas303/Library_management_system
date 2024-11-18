@@ -15,7 +15,7 @@ public class DatabaseConnection {
         if (connection == null) {
             try {
                 String url = "jdbc:mysql://localhost:3306/library_management_system?useSSL=false&serverTimezone=UTC";
-                String user = "nicholas";
+                String user = "root";
                 String password = "NicTech23";
                 connection = DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {

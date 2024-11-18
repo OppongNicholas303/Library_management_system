@@ -115,5 +115,46 @@ public class Librarian extends Patron {
     }
 
 
+    public boolean addPatron(Patron patron){
+        try {
+
+            String query = "INSERT INTO patron (firstName, lastName, email, contact) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = helper.performQuery(query, false, patron.getFirstName(), patron.getLastName(), patron.getEmail(), patron.getContact());
+
+            int result = preparedStatement.executeUpdate();
+            if(result > 0){
+                return true;
+            }
+            return false; // If no rows were affected
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false if an exception occurs
+        }
+    }
+
+
+//    public boolean makeTransaction(Transaction transaction){
+//        try {
+//
+//            String query = "INSERT INTO transaction (patronId, itemId, transactionType, transactionDate, dueDate, return ) VALUES (?, ?, ?, ?. ?, ?)";
+//            PreparedStatement preparedStatement = helper.performQuery(
+//                    query, false, String.valueOf(transaction.getPatronId()),
+//                    String.valueOf(transaction.getItemId()) , transaction.getTransactionType(),
+//                    transaction.getTransactionDate().toString(), transaction.getDueDate().toString(),
+//                    "false"
+//                    );
+//
+//            int result = preparedStatement.executeUpdate();
+//            if(result > 0){
+//                return true;
+//            }
+//            return false; // If no rows were affected
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false; // Return false if an exception occurs
+//        }
+//    }
+
+
 }
 

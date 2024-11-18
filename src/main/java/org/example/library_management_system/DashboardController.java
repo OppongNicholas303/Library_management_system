@@ -14,6 +14,8 @@ import java.io.IOException;
 public class DashboardController {
 
     public Button addMagazineButton;
+
+    public Button borrowItem;
     @FXML
     private StackPane contentArea;
 
@@ -59,6 +61,11 @@ public class DashboardController {
         displayContent("/org/example/library_management_system/magazine.fxml");
     }
 
+    public void handleBorrowItemTab(ActionEvent actionEvent) {
+        displayContent("/org/example/library_management_system/borrowItem.fxml");
+    }
+
+
     private void displayContent(String fxmlPath) {
         try {
             contentArea.getChildren().clear();
@@ -80,6 +87,7 @@ public class DashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 
 
 }

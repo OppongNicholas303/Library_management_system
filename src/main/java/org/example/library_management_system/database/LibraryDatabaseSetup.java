@@ -7,8 +7,8 @@ import java.sql.Statement;
 public class LibraryDatabaseSetup {
     public static void main(String[] args) {
         // Database connection details
-        String url = "jdbc:mysql://localhost:3306/library_management_system";
-        String user = "nicholas";
+        String url = "jdbc:mysql://localhost:3306/library_management_system?useSSL=false&serverTimezone=UTC";
+        String user = "root";
         String password = "NicTech23";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
