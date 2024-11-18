@@ -22,7 +22,7 @@ public class DashboardController {
 
     @FXML
     private void handleBooksTab() {
-        displayContent("Books Section");
+        displayContent("/org/example/library_management_system/bookView.fxml");
     }
 
     @FXML

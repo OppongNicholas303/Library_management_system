@@ -5,6 +5,7 @@ public abstract class LibraryItem {
     private String title;
     private String author;
     private String itemType;
+    private boolean availability;
 
     // Constructor
 
@@ -21,6 +22,14 @@ public abstract class LibraryItem {
     // Getters and Setters
     public int getItemId() {
         return itemId;
+    }
+
+    public boolean isAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
     }
 
     public String getItemType() {
