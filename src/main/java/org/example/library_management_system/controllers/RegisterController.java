@@ -1,5 +1,6 @@
 package org.example.library_management_system.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -10,11 +11,13 @@ import org.example.library_management_system.entities.Librarian;
 import org.example.library_management_system.utils.Helper;
 import org.example.library_management_system.utils.Validation;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class RegisterController {
 
+    public Button backButton;
     @FXML
     private TextField firstNameField;
 
@@ -69,4 +72,11 @@ public class RegisterController {
     }
 
 
+    public void handleBack(ActionEvent actionEvent) {
+        try {
+            helper.navigateToScene("/org/example/library_management_system/homepage.fxml", actionEvent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

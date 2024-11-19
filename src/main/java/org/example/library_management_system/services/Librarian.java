@@ -162,9 +162,24 @@ public class Librarian {
         preparedStatement.setDate(3, Date.valueOf(reservation.getReservationDate()));
 
         int result = preparedStatement.executeUpdate();
-        if(result > 0){
-            return true;
-        }
-        return false;
+
+        return result > 0;
+    }
+
+    public  boolean returnItem(String itemId, String patronID) throws SQLException {
+        Connection connection = DatabaseConnection.getConnection();
+        String query = """
+            UPDATE Transaction t
+            JOIN LibraryItem li ON t.itemId = li.itemId
+            SET t.transactionType = 'Return',
+                li.availability_status = TRUE
+            WHERE t.patronId = ? AND t.itemId = ?;
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, Integer.parseInt(itemId));
+        preparedStatement.setInt(2, Integer.parseInt(patronID));
+        int result = preparedStatement.executeUpdate();
+
+        return result > 0;
     }
 }

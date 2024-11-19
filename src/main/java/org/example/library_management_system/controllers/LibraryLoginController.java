@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LibraryLoginController {
+    public Button backButton;
     Helper helper = new Helper();
     @FXML
     private TextField usernameField;
@@ -67,4 +68,11 @@ public class LibraryLoginController {
 
     }
 
+    public void handleBack(ActionEvent actionEvent) {
+        try {
+            helper.navigateToScene("/org/example/library_management_system/homepage.fxml", actionEvent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

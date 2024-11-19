@@ -13,6 +13,7 @@ import org.example.library_management_system.dto.Transaction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 public class TransactionController {
@@ -67,12 +68,13 @@ public class TransactionController {
                 LibraryItem li ON t.itemId = li.itemId;
         """;
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
 
-            // Process the result set and populate the ObservableList
-            while (resultSet.next()) {
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if(resultSet.next()) {
                 String patronName = resultSet.getString("firstName") + " " + resultSet.getString("lastName");
                 String transactionDate = resultSet.getString("transactionDate");
                 String itemTitle = resultSet.getString("title");
@@ -84,9 +86,29 @@ public class TransactionController {
 
             // Set the data to the TableView
             transactionTable.setItems(transactionList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        try (Connection connection = DatabaseConnection.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(query);
+//             ResultSet resultSet = statement.executeQuery()) {
+//
+//            // Process the result set and populate the ObservableList
+//            while (resultSet.next()) {
+//                String patronName = resultSet.getString("firstName") + " " + resultSet.getString("lastName");
+//                String transactionDate = resultSet.getString("transactionDate");
+//                String itemTitle = resultSet.getString("title");
+//                String dueDate = resultSet.getString("dueDate");
+//                String transactionType = resultSet.getString("transactionType");
+//
+//                transactionList.add(new Transaction(patronName, transactionDate, transactionType, itemTitle, dueDate));
+//            }
+//
+//            // Set the data to the TableView
+//            transactionTable.setItems(transactionList);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }

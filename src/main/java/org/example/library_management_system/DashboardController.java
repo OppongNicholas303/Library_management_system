@@ -16,6 +16,7 @@ public class DashboardController {
     public Button addMagazineButton;
 
     public Button borrowItem;
+    public Button returnItem;
     @FXML
     private StackPane contentArea;
 
@@ -70,6 +71,9 @@ public class DashboardController {
         displayContent("/org/example/library_management_system/reserveView.fxml");
     }
 
+    public void handleReturnItemTab(ActionEvent actionEvent) {
+        displayContent("/org/example/library_management_system/returnView.fxml");
+    }
 
     private void displayContent(String fxmlPath) {
         try {
