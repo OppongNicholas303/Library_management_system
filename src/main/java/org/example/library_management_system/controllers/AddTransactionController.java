@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import org.example.library_management_system.database.DatabaseConnection;
+import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 
 public class AddTransactionController {
     Helper helper = new Helper();
+    Librarian librarian = new Librarian();
     @FXML
     private TextField patronIdField;
     @FXML
@@ -51,24 +53,8 @@ public class AddTransactionController {
             LocalDate transactionDate = transactionDateField.getValue();
             LocalDate dueDate = dueDateField.getValue();
 
-            // Establish the database connection
-            Connection connection = DatabaseConnection.getConnection();
-            String query = "INSERT INTO Transaction (patronId, itemId, transactionType, transactionDate, dueDate, returned) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            // Set parameters for the SQL query
-            preparedStatement.setInt(1, Integer.parseInt(patronId));
-            preparedStatement.setInt(2, Integer.parseInt(itemId));
-            preparedStatement.setString(3, transactionType);
-            preparedStatement.setDate(4, Date.valueOf(transactionDate)); // Convert LocalDate to Date
-            preparedStatement.setDate(5, Date.valueOf(dueDate)); // Convert LocalDate to Date
-            preparedStatement.setBoolean(6, false); // Default value for "returned" field
-
-            // Execute the query
-            int result = preparedStatement.executeUpdate();
-
-            // Show success or failure alert
-            if (result > 0) {
+            boolean isUpdated = librarian.makeTransaction(patronId, itemId, transactionType, transactionDate, dueDate);
+            if (isUpdated) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Transaction Added", "Transaction added successfully!");
             } else {
                 helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred while adding the transaction.");

@@ -19,4 +19,5 @@ module org.example.library_management_system {
     exports org.example.library_management_system.controllers;
     opens org.example.library_management_system.controllers to javafx.fxml;
     opens org.example.library_management_system.entities to javafx.base ;
+    opens org.example.library_management_system.dto to javafx.base;
 }

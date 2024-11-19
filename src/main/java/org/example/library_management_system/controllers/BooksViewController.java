@@ -12,6 +12,7 @@ import org.example.library_management_system.entities.Book;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 public class BooksViewController {
 
@@ -27,14 +28,14 @@ public class BooksViewController {
     @FXML
     private TableColumn<Book, Boolean> availabilityColumn;
 
-    private final ObservableList<Book> booksList = FXCollections.observableArrayList();
+    private final LinkedList<Book> booksList = new LinkedList<>();
 
     @FXML
     public void initialize() {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
-        System.out.println("yaa");
+
         loadBooks();
     }
 
@@ -43,18 +44,19 @@ public class BooksViewController {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT title, author, availability_status FROM libraryItem");
-            System.out.println("ma");
+
             while (resultSet.next()) {
                 Book book = new Book();
                 book.setTitle(resultSet.getString("title"));
-                resultSet.getString("title");
                 book.setAuthor(resultSet.getString("author"));
                 book.setAvailability(resultSet.getBoolean("availability_status"));
-                System.out.println("book" + book.getTitle());
+
                 booksList.add(book);
             }
 
-            booksTable.setItems(booksList);
+            // Convert LinkedList to ObservableList to set in the TableView
+            ObservableList<Book> observableBooksList = FXCollections.observableArrayList(booksList);
+            booksTable.setItems(observableBooksList);
 
         } catch (Exception e) {
             e.printStackTrace();

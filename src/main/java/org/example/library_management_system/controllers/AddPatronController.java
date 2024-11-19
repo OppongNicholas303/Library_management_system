@@ -5,8 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.example.library_management_system.database.DatabaseConnection;
-import org.example.library_management_system.entities.Librarian;
 import org.example.library_management_system.entities.Patron;
+import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 import org.example.library_management_system.utils.Validation;
 
@@ -51,37 +51,9 @@ public class AddPatronController {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Success", "Patron has been added successfully!");
                 helper.clearFields(firstNameField, lastNameField, emailField, contactInfoField);
             } else {
-                helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred. Please try again.");
+                    helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred. Please try again.");
             }
         }
     }
 
-//    private boolean savePatronToDatabase(String firstName, String lastName, String email, String contactInfo) {
-//        try (Connection connection = DatabaseConnection.getConnection()) {
-//            String query = "INSERT INTO patron (first_name, last_name, email, contact_info) VALUES (?, ?, ?, ?)";
-//            PreparedStatement preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setString(1, firstName);
-//            preparedStatement.setString(2, lastName);
-//            preparedStatement.setString(3, email);
-//            preparedStatement.setString(4, contactInfo);
-//
-//            int result = preparedStatement.executeUpdate();
-//            return result > 0;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-//
-//    private boolean isValidEmail(String email) {
-//        // Simple email validation
-//        return email != null && email.contains("@") && email.contains(".");
-//    }
-//
-//    private void clearFields() {
-//        firstNameField.clear();
-//        lastNameField.clear();
-//        emailField.clear();
-//        contactInfoField.clear();
-//    }
 }

@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.example.library_management_system.entities.Librarian;
 import org.example.library_management_system.entities.Magazine;
+import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 
 public class AddMagazine {

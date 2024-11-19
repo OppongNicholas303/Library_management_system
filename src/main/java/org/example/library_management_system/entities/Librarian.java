@@ -32,76 +32,6 @@ public class Librarian extends Patron {
         this.password = password;
     }
 
-    // Additional methods specific to librarians
-    public void manageLibrary() {
-        System.out.println("Managing the library...");
-    }
-
-    public boolean addItemToDatabase(Book book) {
-        try {
-            //Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
-            String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, book.getTitle(), book.getAuthor(), book.getItemType());
-
-            int result = preparedStatement.executeUpdate();
-
-            if (result > 0) {
-                // Get the generated keys from the first insert
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
-
-                    // Now insert into the book table with the generated itemId
-                    String bookQuery = "INSERT INTO book (isbn, publicationYear, bookId) VALUES (?, ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, book.getTitle(), book.getPublicationYear());
-                    bookPreStatement.setInt(3, itemId);
-
-                    int bookResult = bookPreStatement.executeUpdate();
-                    return bookResult > 0;  // Return true if the book was successfully inserted
-                }
-            }
-            return false; // If no rows were affected
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurs
-        }
-    }
-
-
-    public boolean addItemToDatabase(Magazine magazine ) {
-        try {
-           // Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
-            String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, magazine.getTitle(), magazine.getAuthor(), magazine.getItemType());
-
-            int result = preparedStatement.executeUpdate();
-
-            if (result > 0) {
-                // Get the generated keys from the first insert
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
-
-                    // Now insert into the inheritance table with the generated itemId
-                    String bookQuery = "INSERT INTO magazine (issueNumber, magazineId) VALUES ( ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, magazine.getIssueNumber());
-                    bookPreStatement.setInt(2, itemId);
-
-                    int bookResult = bookPreStatement.executeUpdate();
-                    return bookResult > 0;  // Return true if the book was successfully inserted
-                }
-            }
-            return false; // If no rows were affected
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurs
-        }
-    }
-
 
     public int register() throws SQLException {
         String hashedPassword = helper.hashPassword(this.password);
@@ -114,46 +44,6 @@ public class Librarian extends Patron {
 
     }
 
-
-    public boolean addPatron(Patron patron){
-        try {
-
-            String query = "INSERT INTO patron (firstName, lastName, email, contact) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, false, patron.getFirstName(), patron.getLastName(), patron.getEmail(), patron.getContact());
-
-            int result = preparedStatement.executeUpdate();
-            if(result > 0){
-                return true;
-            }
-            return false; // If no rows were affected
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurs
-        }
-    }
-
-
-//    public boolean makeTransaction(Transaction transaction){
-//        try {
-//
-//            String query = "INSERT INTO transaction (patronId, itemId, transactionType, transactionDate, dueDate, return ) VALUES (?, ?, ?, ?. ?, ?)";
-//            PreparedStatement preparedStatement = helper.performQuery(
-//                    query, false, String.valueOf(transaction.getPatronId()),
-//                    String.valueOf(transaction.getItemId()) , transaction.getTransactionType(),
-//                    transaction.getTransactionDate().toString(), transaction.getDueDate().toString(),
-//                    "false"
-//                    );
-//
-//            int result = preparedStatement.executeUpdate();
-//            if(result > 0){
-//                return true;
-//            }
-//            return false; // If no rows were affected
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false; // Return false if an exception occurs
-//        }
-//    }
 
 
 }

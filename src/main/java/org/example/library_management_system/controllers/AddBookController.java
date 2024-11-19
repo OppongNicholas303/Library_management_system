@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.example.library_management_system.database.DatabaseConnection;
 import org.example.library_management_system.entities.Book;
-import org.example.library_management_system.entities.Librarian;
+import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 
 import java.sql.Connection;

@@ -24,6 +24,7 @@
             <Button text="Add Book" fx:id="addBookButton" onAction="#handleAddBookTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Add Magazine" fx:id="addMagazineButton" onAction="#handleAddMagazineTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Borrow Item" fx:id="borrowItem" onAction="#handleBorrowItemTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
+            <Button text="Reserve Item" fx:id="reserveItem" onAction="#handleReserveItemTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
         </VBox>
     </left>
 

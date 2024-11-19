@@ -29,17 +29,17 @@ public class DashboardController {
 
     @FXML
     private void handleMagazinesTab() {
-        displayContent("Magazines Section");
+        displayContent("/org/example/library_management_system/magazineView.fxml");
     }
 
     @FXML
     private void handleReservationsTab() {
-        displayContent("Reservations Section");
+        displayContent("/org/example/library_management_system/reservationTable.fxml");
     }
 
     @FXML
     private void handleTransactionsTab() {
-        displayContent("Transactions Section");
+        displayContent("/org/example/library_management_system/transactionView.fxml");
     }
 
     @FXML
@@ -63,6 +63,11 @@ public class DashboardController {
 
     public void handleBorrowItemTab(ActionEvent actionEvent) {
         displayContent("/org/example/library_management_system/borrowItem.fxml");
+    }
+
+    public void handleReserveItemTab(ActionEvent actionEvent) {
+
+        displayContent("/org/example/library_management_system/reserveView.fxml");
     }
 
 

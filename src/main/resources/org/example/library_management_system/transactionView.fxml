@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      spacing="10" alignment="TOP_CENTER" style="-fx-padding: 20;" fx:controller="org.example.library_management_system.controllers.TransactionController">
+    <Label text="Transaction List" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+    <TableView fx:id="transactionTable">
+        <columns>
+            <TableColumn text="Patron Name" fx:id="patronNameColumn" />
+            <TableColumn text="Transaction Date" fx:id="transactionDateColumn" />
+            <TableColumn text="Item Title" fx:id="itemTitleColumn" />
+            <TableColumn text="Due Date" fx:id="dueDateColumn" />
+            <TableColumn text="Transaction Type" fx:id="transactionTypeColumn" />
+        </columns>
+    </TableView>
+</VBox>
