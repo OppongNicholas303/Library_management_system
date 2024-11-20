@@ -13,28 +13,41 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Controller class for managing the addition of books to the library system.
+ * Handles user input for book details and communicates with the database.
+ */
 public class AddBookController {
-    @FXML
-    public TextField itemTypeField;
-    @FXML
-    public TextField publishedDate;
-    @FXML
-    private TextField titleField;
-    @FXML
-    private TextField authorField;
-    @FXML
-    private TextField isbnField;
-    @FXML
-    private Button submitButton;
 
-    Helper helper = new Helper();
-    Librarian librarian = new Librarian();
+    @FXML
+    public TextField itemTypeField;  // Input for the item type (e.g., book, magazine)
 
+    @FXML
+    public TextField publishedDate;  // Input for the publication date of the book
+
+    @FXML
+    private TextField titleField;  // Input for the book title
+
+    @FXML
+    private TextField authorField;  // Input for the book author
+
+    @FXML
+    private TextField isbnField;  // Input for the book ISBN
+
+    @FXML
+    private Button submitButton;  // Button to submit the form
+
+    Helper helper = new Helper();  // Helper class for utility functions
+    Librarian librarian = new Librarian();  // Librarian class to manage database actions
+
+    /**
+     * Handles the submission of book details. Validates input and adds the book to the database.
+     */
     @FXML
     private void handleSubmit() {
 
+        // Create a new Book object and set its properties from the form
         Book book = new Book();
-
         book.setTitle(titleField.getText());
         book.setItemType(itemTypeField.getText());
         book.setIsbn(isbnField.getText());
@@ -42,11 +55,14 @@ public class AddBookController {
         book.setIsbn(isbnField.getText());
         book.setAuthor(authorField.getText());
 
+        // Validate the form fields
         if (book.getTitle().isEmpty() || book.getAuthor().isEmpty() || book.getIsbn().isEmpty()) {
             helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
         } else {
+            // Attempt to add the book to the database
             boolean isUploaded = librarian.addItemToDatabase(book);
 
+            // Show appropriate message based on success or failure
             if (isUploaded) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Success", "Book has been added successfully!");
                 helper.clearFields(titleField, authorField, isbnField, itemTypeField, publishedDate);

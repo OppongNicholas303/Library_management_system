@@ -15,46 +15,61 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class responsible for handling the librarian login process.
+ * It validates login credentials, navigates to the librarian dashboard if successful,
+ * and handles errors if login fails.
+ */
 public class LibraryLoginController {
-    public Button backButton;
 
     @FXML
-    private TextField usernameField;
+    private Button backButton;  // Button to navigate back to the homepage
 
     @FXML
-    private PasswordField passwordField;
+    private TextField usernameField;  // TextField for entering username (email)
 
     @FXML
-    private Button loginButton;
+    private PasswordField passwordField;  // PasswordField for entering password
 
-    Helper helper = new Helper();
+    @FXML
+    private Button loginButton;  // Button to submit login credentials
 
-    // Handle the login action
+    private final Helper helper = new Helper();  // Helper object to handle utility tasks like alerts and navigation
+
+    /**
+     * Handles the login process. Validates the input fields and checks the credentials
+     * against the database. If valid, navigates to the librarian dashboard.
+     *
+     * @param event The ActionEvent triggered when the login button is clicked.
+     */
     @FXML
     private void handleLogin(ActionEvent event) {
 
         String email = usernameField.getText();
-
         String password = passwordField.getText();
 
+        // Check if any field is empty
         if(email.isEmpty() || password.isEmpty()){
             helper.showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
         } else {
             try {
+                // Query to check if the email exists in the database
                 String query = "SELECT * FROM librarian WHERE email = ? ";
                 PreparedStatement preparedStatement = helper.performQuery(query, false, email);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
+                // Validate the email and password
                 if(resultSet.next()){
                     String emailGet = resultSet.getString("email");
 
                     boolean isValidPassword = helper.comparePassword(password, resultSet.getString("password"));
                     if (isValidPassword) {
+                        // Navigate to the librarian dashboard if credentials are correct
                         helper.navigateToScene("/org/example/library_management_system/librarianDashboard.fxml", event);
-                    }else {
+                    } else {
                         helper.showAlert(AlertType.INFORMATION, "Invalid Credentials", "Email or password is wrong");
-                    };
-                }else {
+                    }
+                } else {
                     helper.showAlert(AlertType.INFORMATION, "Invalid Credentials", "Email or password is wrong");
                 }
             } catch (SQLException e) {
@@ -63,9 +78,13 @@ public class LibraryLoginController {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
+    /**
+     * Navigates the user back to the homepage.
+     *
+     * @param actionEvent The ActionEvent triggered when the back button is clicked.
+     */
     public void handleBack(ActionEvent actionEvent) {
         try {
             helper.navigateToScene("/org/example/library_management_system/homepage.fxml", actionEvent);
@@ -73,5 +92,4 @@ public class LibraryLoginController {
             throw new RuntimeException(e);
         }
     }
-
 }

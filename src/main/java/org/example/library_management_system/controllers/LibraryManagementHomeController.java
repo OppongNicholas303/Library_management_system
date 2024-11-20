@@ -10,27 +10,41 @@ import org.example.library_management_system.utils.Helper;
 
 import java.io.IOException;
 
+/**
+ * Controller class responsible for managing the home page of the library management system.
+ * It handles the actions for navigating to the login and signup pages.
+ */
 public class LibraryManagementHomeController {
-    Helper helper = new Helper();
 
+    private final Helper helper = new Helper();  // Helper object for utility tasks like navigation
 
+    /**
+     * Handles the login button click event. It loads the login page.
+     *
+     * @param event The ActionEvent triggered when the login button is clicked.
+     */
     @FXML
     private void handleLogin(ActionEvent event) {
-        // Load the Login page FXML
         try {
+            // Navigate to the login page
             helper.navigateToScene("/org/example/library_management_system/login.fxml", event);
         } catch (IOException e) {
-            e.printStackTrace();  // Handle error if login.fxml is not found
+            e.printStackTrace();  // Log error if login.fxml is not found
         }
     }
 
+    /**
+     * Handles the signup button click event. It loads the signup page.
+     *
+     * @param event The ActionEvent triggered when the signup button is clicked.
+     */
     @FXML
     public void handleSignup(ActionEvent event) {
-        // Load the SignUp page FXML
         try {
-           helper.navigateToScene("/org/example/library_management_system/register.fxml", event);
+            // Navigate to the signup page
+            helper.navigateToScene("/org/example/library_management_system/register.fxml", event);
         } catch (IOException e) {
-            e.printStackTrace();  // Handle error if signup.fxml is not found
+            e.printStackTrace();  // Log error if register.fxml is not found
         }
     }
 }

@@ -16,7 +16,7 @@
         <TextField fx:id="issueNumberField" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 16;" maxWidth="300"/>
 
         <Label text="Item Type:" GridPane.rowIndex="3" />
-        <TextField fx:id="itemTypeField" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-size: 16;" maxWidth="300"/>
+        <TextField fx:id="itemTypeField" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-size: 16;" maxWidth="300" text="Magazine"/>
 
     </GridPane>
     <Button text="Submit" fx:id="submitButton" style="-fx-font-size: 18; -fx-background-color: #3498db; -fx-text-fill: white; -fx-max-width: 150;" onAction="#handleSubmit"/>

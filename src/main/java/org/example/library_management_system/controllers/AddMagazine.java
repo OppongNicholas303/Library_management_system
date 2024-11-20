@@ -8,45 +8,53 @@ import org.example.library_management_system.entities.Magazine;
 import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 
+/**
+ * Controller class for managing the addition of magazines to the library system.
+ * Handles user input for magazine details and communicates with the database.
+ */
 public class AddMagazine {
-    public TextField titleField;
 
-    public TextField authorField;
+    public TextField titleField;  // Input for the magazine title
 
-    public TextField issueNumberField;
+    public TextField authorField;  // Input for the magazine author
 
-    public TextField itemTypeField;
+    public TextField issueNumberField;  // Input for the magazine issue number
 
-    public Button submitButton;
+    public TextField itemTypeField;  // Input for the item type (e.g., magazine)
 
-    Helper helper = new Helper();
-    Librarian librarian = new Librarian();
+    public Button submitButton;  // Button to submit the form
 
+    Helper helper = new Helper();  // Helper class for utility functions
+    Librarian librarian = new Librarian();  // Librarian class to manage database actions
+
+    /**
+     * Handles the submission of magazine details. Validates input and adds the magazine to the database.
+     * @param actionEvent the event triggered by the submit button
+     */
     public void handleSubmit(ActionEvent actionEvent) {
 
+        // Create a new Magazine object and set its properties from the form
         Magazine magazine = new Magazine();
-
         magazine.setTitle(titleField.getText().trim());
         magazine.setAuthor(authorField.getText().trim());
         magazine.setIssueNumber(issueNumberField.getText());
         magazine.setItemType(itemTypeField.getText());
 
-        if(magazine.getTitle().isEmpty()
-           || magazine.getAuthor().isEmpty()
-           || magazine.getIssueNumber().isEmpty()
-           || magazine.getItemType().isEmpty()
-        ){
+        // Validate the form fields
+        if (magazine.getTitle().isEmpty() || magazine.getAuthor().isEmpty() ||
+            magazine.getIssueNumber().isEmpty() || magazine.getItemType().isEmpty()) {
             helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
-        }else {
+        } else {
+            // Attempt to add the magazine to the database
             boolean isUploaded = librarian.addItemToDatabase(magazine);
 
-            if(isUploaded){
+            // Show appropriate message based on success or failure
+            if (isUploaded) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Success", "Magazine has been added successfully!");
                 helper.clearFields(titleField, authorField, issueNumberField, itemTypeField);
-            }else {
+            } else {
                 helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred. Please try again.");
             }
         }
-
     }
 }

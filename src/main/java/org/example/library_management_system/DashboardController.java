@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import org.example.library_management_system.utils.Helper;
 
 import java.io.IOException;
 
@@ -18,11 +19,15 @@ public class DashboardController {
     public Button borrowItem;
     public Button returnItem;
     public Button patronsButton;
+    public Button profileButton;
+    public Button logoutButton;
     @FXML
     private StackPane contentArea;
 
     @FXML
     private Label welcomeLabel;
+
+    Helper helper = new Helper();
 
     @FXML
     private void handleBooksTab() {
@@ -74,6 +79,13 @@ public class DashboardController {
 
     public void handleReturnItemTab(ActionEvent actionEvent) {
         displayContent("/org/example/library_management_system/returnView.fxml");
+    }
+
+    public void handleProfile(ActionEvent actionEvent) {
+    }
+
+    public void handleLogout(ActionEvent actionEvent) throws IOException {
+        helper.navigateToScene("/org/example/library_management_system/homepage.fxml", actionEvent);
     }
 
     private void displayContent(String fxmlPath) {
