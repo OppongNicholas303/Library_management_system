@@ -8,6 +8,8 @@
 
     <TableView fx:id="transactionTable">
         <columns>
+            <TableColumn text="Patron ID" fx:id="patronIdColumn" />
+            <TableColumn text="Item ID" fx:id="itemIdColumn" />
             <TableColumn text="Patron Name" fx:id="patronNameColumn" />
             <TableColumn text="Transaction Date" fx:id="transactionDateColumn" />
             <TableColumn text="Item Title" fx:id="itemTitleColumn" />

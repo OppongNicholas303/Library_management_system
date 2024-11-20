@@ -14,9 +14,7 @@ public class Book extends LibraryItem {
 
 
     // Constructor
-    public Book(){
-
-    }
+    public Book(){}
 
     public Book(int itemId, String title, String author, String isbn, String publicationYear) {
         super(itemId, title, author);
@@ -49,38 +47,6 @@ public class Book extends LibraryItem {
                 "\nAuthor: " + getAuthor() +
                 "\nGenre: " + isbn +
                 "\nPublication Year: " + publicationYear);
-    }
-
-    public boolean saveBookToDatabase(String title, String author, String isbn, String itemType, String publicationYear) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
-            String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, title, author, itemType);
-
-            int result = preparedStatement.executeUpdate();
-
-            if (result > 0) {
-                // Get the generated keys from the first insert
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
-
-                    // Now insert into the book table with the generated itemId
-                    String bookQuery = "INSERT INTO book (isbn, publicationYear, bookId) VALUES (?, ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, isbn, publicationYear);
-                    bookPreStatement.setInt(3, itemId);
-
-                    int bookResult = bookPreStatement.executeUpdate();
-                    return bookResult > 0;  // Return true if the book was successfully inserted
-                }
-            }
-            return false; // If no rows were affected
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurs
-        }
     }
 
 }

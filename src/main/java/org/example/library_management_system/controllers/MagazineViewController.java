@@ -14,49 +14,66 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedList;
 
+/**
+ * Controller class responsible for managing the magazine view in the library management system.
+ * It handles the display of magazines in a TableView, including retrieving data from the database.
+ */
 public class MagazineViewController {
 
     @FXML
-    private TableView<Magazine> magazinesTable;
+    private TableView<Magazine> magazinesTable;  // TableView to display magazines
 
     @FXML
-    private TableColumn<Magazine, String> titleColumn;
+    private TableColumn<Magazine, Integer> magazineIdColumn;  // Column for magazineId
 
     @FXML
-    private TableColumn<Magazine, String> authorColumn;
+    private TableColumn<Magazine, String> titleColumn;  // Column for magazine title
 
     @FXML
-    private TableColumn<Magazine, String> issueNumberColumn;
+    private TableColumn<Magazine, String> authorColumn;  // Column for magazine author
 
     @FXML
-    private TableColumn<Magazine, Boolean> availabilityColumn;
-
-    // Use LinkedList to store magazine data
-    private final LinkedList<Magazine> magazinesList = new LinkedList<>();
+    private TableColumn<Magazine, String> issueNumberColumn;  // Column for magazine issue number
 
     @FXML
+    private TableColumn<Magazine, Boolean> availabilityColumn;  // Column for magazine availability
+
+    private final LinkedList<Magazine> magazinesList = new LinkedList<>();  // List to hold magazine data
+
+    /**
+     * Initializes the controller by setting up columns in the TableView and loading data.
+     */
     public void initialize() {
-        // Set up columns
+        // Set up cell value factories to bind columns to properties of Magazine objects
+        magazineIdColumn.setCellValueFactory(new PropertyValueFactory<>("itemId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         issueNumberColumn.setCellValueFactory(new PropertyValueFactory<>("issueNumber"));
         availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
 
-        // Load data into TableView
+        // Load data from the database into the TableView
         loadMagazines();
     }
 
+    /**
+     * Loads magazines data from the database and populates the TableView.
+     * The data is retrieved using a SQL query that joins the LibraryItem and Magazine tables.
+     */
     private void loadMagazines() {
         try {
+            // Establish a connection to the database
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
-            String query = "SELECT li.title, li.author, m.issueNumber, li.availability_status " +
-                    "FROM LibraryItem li " +
-                    "JOIN Magazine m ON li.itemId = m.magazineId";
+            // SQL query to fetch magazine details
+            String query = "SELECT li.itemId, li.title, li.author, m.issueNumber, li.availability_status " +
+                           "FROM LibraryItem li " +
+                           "JOIN Magazine m ON li.itemId = m.magazineId";
             ResultSet resultSet = statement.executeQuery(query);
 
+            // Process the result set and add Magazine objects to the list
             while (resultSet.next()) {
                 Magazine magazine = new Magazine();
+                magazine.setItemId(resultSet.getInt("itemId"));
                 magazine.setTitle(resultSet.getString("title"));
                 magazine.setAuthor(resultSet.getString("author"));
                 magazine.setIssueNumber(resultSet.getString("issueNumber"));
@@ -65,11 +82,11 @@ public class MagazineViewController {
                 magazinesList.add(magazine);
             }
 
-            // Convert LinkedList to ObservableList for TableView
+            // Convert the LinkedList to an ObservableList to populate the TableView
             ObservableList<Magazine> observableList = FXCollections.observableArrayList(magazinesList);
             magazinesTable.setItems(observableList);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  // Log any errors encountered during data loading
         }
     }
 }

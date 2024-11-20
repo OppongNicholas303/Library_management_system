@@ -9,12 +9,20 @@
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #34495e; -fx-padding: 10;">
             <Label text="Library Management" style="-fx-font-size: 24; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+            <!-- Spacer to push the buttons to the right -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Profile and Logout buttons -->
+            <Button text="Profile" fx:id="profileButton" onAction="#handleProfile" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
+            <Button text="Logout" fx:id="logoutButton" onAction="#handleLogout" style="-fx-text-fill: white; -fx-background-color: #e74c3c;" />
         </HBox>
     </top>
 
     <!-- Sidebar -->
     <left>
         <VBox spacing="10" alignment="TOP_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <!-- Existing buttons -->
             <Button text="Books" fx:id="booksButton" onAction="#handleBooksTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Magazines" fx:id="magazinesButton" onAction="#handleMagazinesTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />
             <Button text="Reservations" fx:id="reservationsButton" onAction="#handleReservationsTab" style="-fx-text-fill: white; -fx-background-color: #34495e;" />

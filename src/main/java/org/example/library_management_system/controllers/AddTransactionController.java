@@ -15,45 +15,59 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Controller class for managing the addition of transactions in the library system.
+ * Handles user input for transaction details and communicates with the database.
+ */
 public class AddTransactionController {
-    Helper helper = new Helper();
-    Librarian librarian = new Librarian();
-    @FXML
-    private TextField patronIdField;
-    @FXML
-    private TextField itemIdField;
-    @FXML
-    private TextField transactionTypeField;
-    @FXML
-    private DatePicker transactionDateField;
-    @FXML
-    private DatePicker dueDateField;
-    @FXML
-    private Button submitTransactionButton;
+
+    Librarian librarian = new Librarian();  // Librarian class to manage transaction actions
 
     @FXML
+    private TextField patronIdField;  // Input for the patron ID
 
+    @FXML
+    private TextField itemIdField;  // Input for the item (book/magazine) ID
+
+    @FXML
+    private TextField transactionTypeField;  // Input for the transaction type (borrow/return)
+
+    @FXML
+    private DatePicker transactionDateField;  // DatePicker for the transaction date
+
+    @FXML
+    private DatePicker dueDateField;  // DatePicker for the due date
+
+    @FXML
+    private Button submitTransactionButton;  // Button to submit the transaction
+
+    Helper helper = new Helper();  // Helper class for utility functions
+
+    /**
+     * Handles the submission of transaction details. Validates input and adds the transaction to the database.
+     */
+    @FXML
     private void handleSubmitTransaction() {
         try {
-            Helper helper = new Helper();
-
-            // Validate inputs
+            // Validate the form fields
             if (patronIdField.getText().isEmpty() || itemIdField.getText().isEmpty() ||
-                    transactionTypeField.getText().isEmpty() || transactionDateField.getValue() == null || dueDateField.getValue() == null) {
+                transactionTypeField.getText().isEmpty() || transactionDateField.getValue() == null ||
+                dueDateField.getValue() == null) {
                 helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
                 return;
             }
 
-            // Retrieve input values
+            // Retrieve the input values
             String patronId = patronIdField.getText();
             String itemId = itemIdField.getText();
             String transactionType = transactionTypeField.getText();
-
-            // Get LocalDate values from DatePicker
             LocalDate transactionDate = transactionDateField.getValue();
             LocalDate dueDate = dueDateField.getValue();
 
+            // Attempt to make the transaction
             boolean isUpdated = librarian.makeTransaction(patronId, itemId, transactionType, transactionDate, dueDate);
+
+            // Show the appropriate message based on success or failure
             if (isUpdated) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Transaction Added", "Transaction added successfully!");
             } else {
@@ -65,4 +79,3 @@ public class AddTransactionController {
         }
     }
 }
-

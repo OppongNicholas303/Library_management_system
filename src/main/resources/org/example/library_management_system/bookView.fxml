@@ -7,10 +7,11 @@
     <Label text="Books List" style="-fx-font-size: 18; -fx-font-weight: bold;" />
     <TableView fx:id="booksTable">
         <columns>
+            <TableColumn text="Book ID" fx:id="bookIdColumn" />
             <TableColumn text="Title" fx:id="titleColumn" />
             <TableColumn text="Author" fx:id="authorColumn" />
             <TableColumn text="Available" fx:id="availabilityColumn" />
         </columns>
     </TableView>
-
 </VBox>
+

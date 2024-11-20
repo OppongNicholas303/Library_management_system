@@ -11,262 +11,251 @@ import org.example.library_management_system.utils.Helper;
 import java.sql.*;
 import java.time.LocalDate;
 
+/**
+ * The Librarian class provides various services to interact with the library's
+ * database, such as adding items (books, magazines), managing patrons, making
+ * transactions, and processing reservations and returns.
+ */
 public class Librarian {
-    Helper helper;
+    private Helper helper;  // Helper utility class for showing alerts and performing queries
 
+    /**
+     * Constructs a Librarian object.
+     * Initializes the Helper instance.
+     */
     public Librarian() {
         helper = new Helper();
     }
 
+    /**
+     * Adds a book to the library database.
+     *
+     * @param book The book object to be added.
+     * @return true if the book was successfully added, false otherwise.
+     */
     public boolean addItemToDatabase(Book book) {
         try {
-            //Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
+            // Insert LibraryItem record
             String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, book.getTitle(), book.getAuthor(), book.getItemType());
-
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query, true,
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getItemType()
+            );
             int result = preparedStatement.executeUpdate();
 
             if (result > 0) {
-                // Get the generated keys from the first insert
+                // Retrieve the generated itemId
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
+                    int itemId = generatedKeys.getInt(1);  // Retrieve the itemId
 
-                    // Now insert into the book table with the generated itemId
+                    // Insert Book-specific information
                     String bookQuery = "INSERT INTO book (isbn, publicationYear, bookId) VALUES (?, ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, book.getTitle(), book.getPublicationYear());
+                    PreparedStatement bookPreStatement = helper.performQuery(
+                            bookQuery, false,
+                            book.getIsbn(),
+                            book.getPublicationYear()
+                    );
+
                     bookPreStatement.setInt(3, itemId);
 
                     int bookResult = bookPreStatement.executeUpdate();
-                    return bookResult > 0;  // Return true if the book was successfully inserted
+                    return bookResult > 0;
                 }
             }
             return false; // If no rows were affected
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // Return false if an exception occurs
+            return false;
         }
     }
 
-    public boolean addItemToDatabase(Magazine magazine ) {
+    /**
+     * Adds a magazine to the library database.
+     *
+     * @param magazine The magazine object to be added.
+     * @return true if the magazine was successfully added, false otherwise.
+     */
+    public boolean addItemToDatabase(Magazine magazine) {
         try {
-            // Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
+            // Insert LibraryItem record
             String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, magazine.getTitle(), magazine.getAuthor(), magazine.getItemType());
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query, true,
+                    magazine.getTitle(),
+                    magazine.getAuthor(),
+                    magazine.getItemType()
+            );
 
             int result = preparedStatement.executeUpdate();
 
             if (result > 0) {
-                // Get the generated keys from the first insert
+                // Retrieve the generated itemId
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
+                    int itemId = generatedKeys.getInt(1);  // Retrieve the itemId
 
-                    // Now insert into the inheritance table with the generated itemId
-                    String bookQuery = "INSERT INTO magazine (issueNumber, magazineId) VALUES ( ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, magazine.getIssueNumber());
-                    bookPreStatement.setInt(2, itemId);
+                    // Insert Magazine-specific information
+                    String magazineQuery = "INSERT INTO magazine (issueNumber, magazineId) VALUES (?, ?)";
+                    PreparedStatement magazinePreStatement = helper.performQuery(
+                            magazineQuery, false,
+                            magazine.getIssueNumber()
+                    );
+                    magazinePreStatement.setInt(2, itemId);
 
-                    int bookResult = bookPreStatement.executeUpdate();
-                    return bookResult > 0;  // Return true if the book was successfully inserted
+                    int magazineResult = magazinePreStatement.executeUpdate();
+                    return magazineResult > 0;
                 }
             }
             return false; // If no rows were affected
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // Return false if an exception occurs
+            return false;
         }
     }
 
-    public int register(org.example.library_management_system.entities.Librarian librarian) throws SQLException {
-        String hashedPassword = helper.hashPassword(librarian.getPassword());
-        String query = "INSERT INTO librarian (firstName, lastName, contact,  password, email) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = helper.performQuery(query, false, librarian.getFirstName(), librarian.getLastName(), librarian.getContact(), hashedPassword, librarian.getEmail());
-        return  preparedStatement.executeUpdate();
-    }
-
-    public boolean addPatron(Patron patron){
+    /**
+     * Adds a patron to the library database.
+     *
+     * @param patron The patron object to be added.
+     * @return true if the patron was successfully added, false otherwise.
+     */
+    public boolean addPatron(Patron patron) {
         try {
-
+            // Insert patron record
             String query = "INSERT INTO patron (firstName, lastName, email, contact) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, false, patron.getFirstName(), patron.getLastName(), patron.getEmail(), patron.getContact());
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query, false,
+                    patron.getFirstName(),
+                    patron.getLastName(),
+                    patron.getEmail(),
+                    patron.getContact()
+            );
 
             int result = preparedStatement.executeUpdate();
-
-            return  result > 0;
-
+            return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // Return false if an exception occurs
+            return false;
         }
     }
 
-
-//    public boolean makeTransaction(String patronId, String itemId, String transactionType, LocalDate transactionDate, LocalDate dueDate) throws SQLException {
-//        // Establish the database connection
-//
-//        Connection connection = DatabaseConnection.getConnection();
-//
-//        String IdQuery  = "SELECT availability_status FROM LibraryItem WHERE itemId = ?";
-//
-//        PreparedStatement idPreparedStatement = connection.prepareStatement(IdQuery);
-//        idPreparedStatement.setString(1, itemId);
-//        ResultSet idResultSet = idPreparedStatement.executeQuery();
-//        if(idResultSet.next()){
-//            boolean isAvailable = idResultSet.getBoolean("availability_status");
-//            if(!isAvailable){
-//                helper.showAlert(Alert.AlertType.INFORMATION, "Transaction fail", "Item not available");
-//                return false;
-//            }
-//        }
-//
-//        String query = "INSERT INTO Transaction (patronId, itemId, transactionType, transactionDate, dueDate, returned) VALUES (?, ?, ?, ?, ?, ?)";
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//
-//        // Set parameters for the SQL query
-//        preparedStatement.setInt(1, Integer.parseInt(patronId));
-//        preparedStatement.setInt(2, Integer.parseInt(itemId));
-//        preparedStatement.setString(3, transactionType);
-//
-//        preparedStatement.setDate(4, Date.valueOf(transactionDate)); // Convert LocalDate to Date
-//        preparedStatement.setDate(5, Date.valueOf(dueDate)); // Convert LocalDate to Date
-//        preparedStatement.setBoolean(6, false); // Default value for "returned" field
-//
-//        // Execute the query
-//        int result = preparedStatement.executeUpdate();
-//
-//        if(result > 0){
-//            String updateQuery =  "UPDATE LibraryItem SET availability_status = FALSE WHERE itemId = ?";
-//            PreparedStatement updatePreparedStatement = connection.prepareStatement(updateQuery);
-//
-//            updatePreparedStatement.setInt(1, Integer.parseInt(itemId));
-//            result = updatePreparedStatement.executeUpdate();
-//
-//            return result > 0;
-//
-//        }
-//        return false;
-//    }
-
-    public boolean makeTransaction(String patronId, String itemId, String transactionType, LocalDate transactionDate, LocalDate dueDate) throws SQLException {
-        // Establish the database connection
+    /**
+     * Makes a transaction for a patron (e.g., borrowing an item).
+     *
+     * @param patronId The ID of the patron performing the transaction.
+     * @param itemId The ID of the item being transacted.
+     * @param transactionType The type of transaction (e.g., 'Borrow').
+     * @param transactionDate The date of the transaction.
+     * @param dueDate The due date for returning the item.
+     * @return true if the transaction was successful, false otherwise.
+     * @throws SQLException if an error occurs during SQL execution.
+     */
+    public boolean makeTransaction(
+            String patronId,
+            String itemId,
+            String transactionType,
+            LocalDate transactionDate,
+            LocalDate dueDate
+    ) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
 
-        // Check if the patron exists in the Patron table
+        // Check if the patron exists in the database
         String patronQuery = "SELECT patronId FROM Patron WHERE patronId = ?";
         PreparedStatement patronPreparedStatement = connection.prepareStatement(patronQuery);
         patronPreparedStatement.setString(1, patronId);
         ResultSet patronResultSet = patronPreparedStatement.executeQuery();
 
-        // If no patron is found, show an error and return false
         if (!patronResultSet.next()) {
             helper.showAlert(Alert.AlertType.ERROR, "Transaction Failed", "Patron does not exist.");
             return false;
         }
 
-        // Check the availability status of the item
+        // Check if the item is available for transaction
         String itemQuery = "SELECT availability_status FROM LibraryItem WHERE itemId = ?";
         PreparedStatement itemPreparedStatement = connection.prepareStatement(itemQuery);
         itemPreparedStatement.setString(1, itemId);
         ResultSet itemResultSet = itemPreparedStatement.executeQuery();
+
         if (itemResultSet.next()) {
             boolean isAvailable = itemResultSet.getBoolean("availability_status");
             if (!isAvailable) {
-                helper.showAlert(Alert.AlertType.INFORMATION, "Transaction failed", "Item not available.");
+                helper.showAlert(Alert.AlertType.INFORMATION, "Transaction Failed", "Item not available.");
                 return false;
             }
         }
 
-        // Insert the transaction into the Transaction table
+        // Insert the transaction record into the Transaction table
         String transactionQuery = "INSERT INTO Transaction (patronId, itemId, transactionType, transactionDate, dueDate, returned) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement transactionPreparedStatement = connection.prepareStatement(transactionQuery);
-
-        // Set parameters for the transaction
         transactionPreparedStatement.setString(1, patronId);
         transactionPreparedStatement.setString(2, itemId);
         transactionPreparedStatement.setString(3, transactionType);
-        transactionPreparedStatement.setDate(4, Date.valueOf(transactionDate));  // Convert LocalDate to Date
-        transactionPreparedStatement.setDate(5, Date.valueOf(dueDate));  // Convert LocalDate to Date
-        transactionPreparedStatement.setBoolean(6, false);  // Default value for "returned"
+        transactionPreparedStatement.setDate(4, Date.valueOf(transactionDate));
+        transactionPreparedStatement.setDate(5, Date.valueOf(dueDate));
+        transactionPreparedStatement.setBoolean(6, false);
 
-        // Execute the transaction insertion
         int result = transactionPreparedStatement.executeUpdate();
 
         if (result > 0) {
-            // If transaction was successfully added, update the availability status of the item
+            // Update the item's availability status
             String updateItemQuery = "UPDATE LibraryItem SET availability_status = FALSE WHERE itemId = ?";
             PreparedStatement updateItemPreparedStatement = connection.prepareStatement(updateItemQuery);
             updateItemPreparedStatement.setString(1, itemId);
             result = updateItemPreparedStatement.executeUpdate();
 
-            return result > 0;  // If the item status was updated successfully
+            return result > 0;
         }
         return false;
     }
 
-
+    /**
+     * Makes a reservation for a patron.
+     *
+     * @param reservation The reservation object containing the patron ID, item ID, and reservation date.
+     * @return true if the reservation was successful, false otherwise.
+     * @throws SQLException if an error occurs during SQL execution.
+     */
     public boolean makeReservation(Reservation reservation) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
-        String query = "INSERT INTO reservation (patronId, itemId, reservationDate  ) VALUES (?, ?, ?)";
+        String query = "INSERT INTO reservation (patronId, itemId, reservationDate) VALUES (?, ?, ?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, reservation.getPatronId());
-        preparedStatement.setInt(2, reservation.getPatronId());
+        preparedStatement.setInt(2, reservation.getItemID());
         preparedStatement.setDate(3, Date.valueOf(reservation.getReservationDate()));
 
         int result = preparedStatement.executeUpdate();
-
         return result > 0;
     }
 
-    public  boolean returnItem(String itemId, String patronId) throws SQLException {
+    /**
+     * Processes the return of an item by updating the transaction and item availability status.
+     *
+     * @param itemId The ID of the item being returned.
+     * @param patronId The ID of the patron returning the item.
+     * @return true if the item was successfully returned, false otherwise.
+     * @throws SQLException if an error occurs during SQL execution.
+     */
+    public boolean returnItem(String itemId, String patronId) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
-//        String query = """
-//            UPDATE Transaction t
-//            JOIN LibraryItem li ON t.itemId = li.itemId
-//            SET t.transactionType = 'Return',
-//                li.availability_status = TRUE
-//            WHERE t.patronId = ? AND t.itemId = ?;
-//        """;
-//
-//        String query = """
-//            UPDATE Transaction t
-//            JOIN LibraryItem li ON t.itemId = li.itemId
-//            SET t.transactionType = 'Return',
-//                li.availability_status = TRUE
-//            WHERE t.itemId = ? AND t.patronId = ?;
-//        """;
 
-        String queryTransaction = """
-            UPDATE Transaction
-            SET transactionType = 'Return'
-            WHERE itemId = ? AND patronId = ?;
-        """;
+        String query = """
+        UPDATE Transaction t
+        JOIN LibraryItem li ON t.itemId = li.itemId
+        SET t.transactionType = 'Return',
+            li.availability_status = TRUE
+        WHERE t.patronId = ? AND t.itemId = ?;
+    """;
 
-        String queryLibraryItem = """
-            UPDATE LibraryItem
-            SET availability_status = TRUE
-            WHERE itemId = ?;
-        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, Integer.parseInt(patronId));
+        preparedStatement.setInt(2, Integer.parseInt(itemId));
 
-        PreparedStatement preparedStatement = connection.prepareStatement(queryTransaction);
-        preparedStatement.setInt(1, Integer.parseInt(itemId));
-        preparedStatement.setInt(2, Integer.parseInt(patronId));
-        int transactionResult = preparedStatement.executeUpdate();
+        int rowsUpdated = preparedStatement.executeUpdate();
 
-        if(transactionResult > 0){
-            PreparedStatement preparedStatement1 = connection.prepareStatement(queryLibraryItem);
-            preparedStatement1.setInt(1, Integer.parseInt(itemId));
-            int libraryItemnResult = preparedStatement.executeUpdate();
-
-           return libraryItemnResult > 0;
-
-        }
-
-        return false;
+        return rowsUpdated > 0;
     }
 }

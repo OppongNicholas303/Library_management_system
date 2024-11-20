@@ -38,7 +38,6 @@ public class Helper {
     }
 
     public boolean comparePassword(String plainPassword, String hashedPassword){
-
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 

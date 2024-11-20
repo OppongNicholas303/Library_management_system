@@ -8,6 +8,7 @@
 
     <TableView fx:id="reservationTable">
         <columns>
+            <TableColumn text="Patron ID" fx:id="patronIdColumn" />
             <TableColumn text="Patron Name" fx:id="patronNameColumn" />
             <TableColumn text="Item Title" fx:id="itemTitleColumn" />
             <TableColumn text="Reservation Date" fx:id="reservationDateColumn" />
