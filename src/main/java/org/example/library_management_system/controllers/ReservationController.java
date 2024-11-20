@@ -13,12 +13,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class ReservationController {
 
     @FXML
     private TableView<Reservation> reservationTable;
+
+    @FXML
+    private TableColumn<Reservation, Integer> patronIdColumn;
 
     @FXML
     private TableColumn<Reservation, String> patronNameColumn;
@@ -30,27 +32,29 @@ public class ReservationController {
     private TableColumn<Reservation, String> reservationDateColumn;
 
     private final LinkedList<Reservation> reservationList = new LinkedList<>();
-    private  final Stack<Reservation> stack = new Stack<>();
 
     @FXML
     public void initialize() {
         // Map table columns to Reservation properties
-       patronNameColumn.setCellValueFactory(new PropertyValueFactory<>("patronName"));
+        patronIdColumn.setCellValueFactory(new PropertyValueFactory<>("patronId"));  // Set patronId column
+        patronNameColumn.setCellValueFactory(new PropertyValueFactory<>("patronName"));
         itemTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate")); // Fix the property name
+        reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
 
         // Load reservation data from the database
         loadReservations();
     }
 
     private void loadReservations() {
-       String query = """
+        String query = """
                SELECT reservation.reservationDate AS reservationDate,
+                      patron.patronId AS patronId,
                       patron.firstName AS patronName,
                       libraryitem.title AS itemTitle
                FROM reservation
                JOIN patron ON reservation.patronId = patron.patronId
                JOIN libraryitem ON reservation.itemId = libraryitem.itemId""";
+
         try {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
@@ -58,21 +62,17 @@ public class ReservationController {
 
             while (resultSet.next()) {
                 // Retrieve values from the result set
+                int patronId = resultSet.getInt("patronId");
                 String patronName = resultSet.getString("patronName");
                 String itemTitle = resultSet.getString("itemTitle");
                 String reservationDate = resultSet.getString("reservationDate");
 
                 // Create a new Reservation object
-                Reservation reservation = new Reservation(patronName, itemTitle, reservationDate);
+                Reservation reservation = new Reservation(patronId, patronName, itemTitle, reservationDate);
 
                 // Add the reservation to the list
                 reservationList.add(reservation);
-               // stack.push(reservation);
             }
-
-//            while (!stack.isEmpty()) {
-//                reservationList.add(stack.pop());
-//            }
 
             // Convert LinkedList to ObservableList and bind it to the TableView
             ObservableList<Reservation> observableReservationList = FXCollections.observableArrayList(reservationList);

@@ -8,10 +8,8 @@ public class Patron {
     private String contact;
 
     // Constructor
+    public Patron(){}
 
-    public Patron(){
-
-    }
     public Patron(int patronId, String firstName, String lastName, String email, String contact) {
         this.patronId = patronId;
         this.firstName = firstName;

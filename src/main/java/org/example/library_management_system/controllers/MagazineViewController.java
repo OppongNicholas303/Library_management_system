@@ -20,6 +20,9 @@ public class MagazineViewController {
     private TableView<Magazine> magazinesTable;
 
     @FXML
+    private TableColumn<Magazine, Integer> magazineIdColumn;  // Add column for magazineId
+
+    @FXML
     private TableColumn<Magazine, String> titleColumn;
 
     @FXML
@@ -31,12 +34,11 @@ public class MagazineViewController {
     @FXML
     private TableColumn<Magazine, Boolean> availabilityColumn;
 
-    // Use LinkedList to store magazine data
     private final LinkedList<Magazine> magazinesList = new LinkedList<>();
 
-    @FXML
     public void initialize() {
         // Set up columns
+        magazineIdColumn.setCellValueFactory(new PropertyValueFactory<>("itemId"));  // Set magazineId column
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         issueNumberColumn.setCellValueFactory(new PropertyValueFactory<>("issueNumber"));
@@ -50,13 +52,14 @@ public class MagazineViewController {
         try {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
-            String query = "SELECT li.title, li.author, m.issueNumber, li.availability_status " +
-                    "FROM LibraryItem li " +
-                    "JOIN Magazine m ON li.itemId = m.magazineId";
+            String query = "SELECT li.itemId, li.title, li.author, m.issueNumber, li.availability_status " +
+                           "FROM LibraryItem li " +
+                           "JOIN Magazine m ON li.itemId = m.magazineId";  // Fetch itemId as magazineId
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
                 Magazine magazine = new Magazine();
+                magazine.setItemId(resultSet.getInt("itemId"));  // Set magazineId
                 magazine.setTitle(resultSet.getString("title"));
                 magazine.setAuthor(resultSet.getString("author"));
                 magazine.setIssueNumber(resultSet.getString("issueNumber"));

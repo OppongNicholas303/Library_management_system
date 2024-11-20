@@ -36,14 +36,19 @@ public class Librarian extends Patron {
     public int register() throws SQLException {
         String hashedPassword = helper.hashPassword(this.password);
         String query = "INSERT INTO librarian (firstName, lastName, contact,  password, email) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = helper.performQuery(query, false, this.getFirstName(), this.getLastName(), this.getContact(), hashedPassword, this.getEmail());
+
+        PreparedStatement preparedStatement = helper.performQuery(
+                query,
+                false,
+                this.getFirstName(),
+                this.getLastName(),
+                this.getContact(),
+                hashedPassword,
+                this.getEmail()
+        );
+
         return  preparedStatement.executeUpdate();
     }
-
-    public void login(){
-
-    }
-
 
 
 }

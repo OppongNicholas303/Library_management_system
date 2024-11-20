@@ -14,25 +14,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class AddBookController {
+    @FXML
     public TextField itemTypeField;
-
+    @FXML
     public TextField publishedDate;
-
-    Helper helper = new Helper();
-
-    Librarian librarian = new Librarian();
-
     @FXML
     private TextField titleField;
-
     @FXML
     private TextField authorField;
-
     @FXML
     private TextField isbnField;
-
     @FXML
     private Button submitButton;
+
+    Helper helper = new Helper();
+    Librarian librarian = new Librarian();
 
     @FXML
     private void handleSubmit() {
@@ -50,6 +46,7 @@ public class AddBookController {
             helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
         } else {
             boolean isUploaded = librarian.addItemToDatabase(book);
+
             if (isUploaded) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Success", "Book has been added successfully!");
                 helper.clearFields(titleField, authorField, isbnField, itemTypeField, publishedDate);

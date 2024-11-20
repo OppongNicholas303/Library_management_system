@@ -10,9 +10,13 @@ import org.example.library_management_system.utils.Helper;
 
 public class AddMagazine {
     public TextField titleField;
+
     public TextField authorField;
+
     public TextField issueNumberField;
+
     public TextField itemTypeField;
+
     public Button submitButton;
 
     Helper helper = new Helper();
@@ -27,7 +31,11 @@ public class AddMagazine {
         magazine.setIssueNumber(issueNumberField.getText());
         magazine.setItemType(itemTypeField.getText());
 
-        if(magazine.getTitle().isEmpty() || magazine.getAuthor().isEmpty() || magazine.getIssueNumber().isEmpty() || magazine.getItemType().isEmpty()){
+        if(magazine.getTitle().isEmpty()
+           || magazine.getAuthor().isEmpty()
+           || magazine.getIssueNumber().isEmpty()
+           || magazine.getItemType().isEmpty()
+        ){
             helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
         }else {
             boolean isUploaded = librarian.addItemToDatabase(magazine);
@@ -41,6 +49,4 @@ public class AddMagazine {
         }
 
     }
-
-
 }

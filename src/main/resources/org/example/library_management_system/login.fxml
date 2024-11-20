@@ -36,7 +36,7 @@
         <!-- Form fields with labels and input fields grouped together for consistent alignment -->
         <VBox alignment="CENTER" spacing="8.0" prefWidth="260.0">
             <!-- Username Field -->
-            <Label text="Username" style="-fx-text-fill: #555555;"/>
+            <Label text="Email" style="-fx-text-fill: #555555;"/>
             <TextField fx:id="usernameField" promptText="Enter your username" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
 
             <!-- Password Field -->

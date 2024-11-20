@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 public class LibraryLoginController {
     public Button backButton;
-    Helper helper = new Helper();
+
     @FXML
     private TextField usernameField;
 
@@ -27,38 +27,36 @@ public class LibraryLoginController {
     @FXML
     private Button loginButton;
 
+    Helper helper = new Helper();
+
     // Handle the login action
     @FXML
     private void handleLogin(ActionEvent event) {
+
         String email = usernameField.getText();
+
         String password = passwordField.getText();
 
         if(email.isEmpty() || password.isEmpty()){
             helper.showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
         } else {
             try {
-
                 String query = "SELECT * FROM librarian WHERE email = ? ";
-
                 PreparedStatement preparedStatement = helper.performQuery(query, false, email);
-
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next()){
                     String emailGet = resultSet.getString("email");
 
                     boolean isValidPassword = helper.comparePassword(password, resultSet.getString("password"));
-
                     if (isValidPassword) {
                         helper.navigateToScene("/org/example/library_management_system/librarianDashboard.fxml", event);
                     }else {
                         helper.showAlert(AlertType.INFORMATION, "Invalid Credentials", "Email or password is wrong");
                     };
-
                 }else {
                     helper.showAlert(AlertType.INFORMATION, "Invalid Credentials", "Email or password is wrong");
                 }
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
@@ -75,4 +73,5 @@ public class LibraryLoginController {
             throw new RuntimeException(e);
         }
     }
+
 }

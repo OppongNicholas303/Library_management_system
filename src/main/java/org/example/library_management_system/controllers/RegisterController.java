@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 public class RegisterController {
 
     public Button backButton;
+
     @FXML
     private TextField firstNameField;
 
@@ -39,6 +40,7 @@ public class RegisterController {
     // Handle the register action
     @FXML
     Helper helper = new Helper();
+
     @FXML
     private void handleRegister() {
         Librarian librarian = new Librarian();
@@ -52,16 +54,30 @@ public class RegisterController {
         Validation validation = new Validation();
 
         // Basic validation and feedback (replace with your actual registration logic)
-        if (librarian.getFirstName().isEmpty() || librarian.getLastName().isEmpty() || librarian.getContact().isEmpty() || librarian.getEmail().isEmpty() || librarian.getPassword().isEmpty()) {
+        if (librarian.getFirstName().isEmpty()
+            || librarian.getLastName().isEmpty()
+            || librarian.getContact().isEmpty()
+            || librarian.getEmail().isEmpty()
+            || librarian.getPassword().isEmpty()
+        ) {
             helper.showAlert(AlertType.ERROR, "Registration Failed", "Please fill in all fields.");
-        } else if(!validation.isValidEmail(librarian.getEmail()) || ! validation.isValidContact(librarian.getContact())){
+        } else if(!validation.isValidEmail(librarian.getEmail())
+                  || ! validation.isValidContact(librarian.getContact())
+        ){
             helper.showAlert(AlertType.ERROR, "Mismatch input", "Check your inputs");
         }
         else {
             try {
                 int result = librarian.register();
                 if(result > 0){
-                    helper.showAlert(AlertType.INFORMATION, "Registration Successful", "Welcome, " + librarian.getFirstName() + " " + librarian.getLastName() + "!");
+                    helper.showAlert(
+                            AlertType.INFORMATION,
+                            "Registration Successful",
+                            "Welcome, " +
+                            librarian.getFirstName() +
+                            " " + librarian.getLastName()
+                            + "!"
+                    );
                 }else {
                     System.out.println("fail");
                 }

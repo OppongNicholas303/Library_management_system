@@ -17,6 +17,7 @@ public class DashboardController {
 
     public Button borrowItem;
     public Button returnItem;
+    public Button patronsButton;
     @FXML
     private StackPane contentArea;
 
@@ -45,7 +46,7 @@ public class DashboardController {
 
     @FXML
     private void handlePatronsTab() {
-        displayContent("Patrons Section");
+        displayContent("/org/example/library_management_system/patronView.fxml");
     }
 
     @FXML

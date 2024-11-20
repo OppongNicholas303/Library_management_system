@@ -16,30 +16,42 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class AddTransactionController {
-    Helper helper = new Helper();
+
     Librarian librarian = new Librarian();
+
     @FXML
     private TextField patronIdField;
+
     @FXML
     private TextField itemIdField;
+
     @FXML
     private TextField transactionTypeField;
+
     @FXML
     private DatePicker transactionDateField;
+
     @FXML
     private DatePicker dueDateField;
+
     @FXML
     private Button submitTransactionButton;
 
-    @FXML
 
+    Helper helper = new Helper();
+
+    @FXML
     private void handleSubmitTransaction() {
         try {
             Helper helper = new Helper();
 
             // Validate inputs
-            if (patronIdField.getText().isEmpty() || itemIdField.getText().isEmpty() ||
-                    transactionTypeField.getText().isEmpty() || transactionDateField.getValue() == null || dueDateField.getValue() == null) {
+            if (patronIdField.getText().isEmpty()
+                || itemIdField.getText().isEmpty()
+                || transactionTypeField.getText().isEmpty()
+                || transactionDateField.getValue() == null
+                || dueDateField.getValue() == null)
+            {
                 helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
                 return;
             }
@@ -53,7 +65,14 @@ public class AddTransactionController {
             LocalDate transactionDate = transactionDateField.getValue();
             LocalDate dueDate = dueDateField.getValue();
 
-            boolean isUpdated = librarian.makeTransaction(patronId, itemId, transactionType, transactionDate, dueDate);
+            boolean isUpdated = librarian.makeTransaction(
+                    patronId,
+                    itemId,
+                    transactionType,
+                    transactionDate,
+                    dueDate
+            );
+
             if (isUpdated) {
                 helper.showAlert(Alert.AlertType.INFORMATION, "Transaction Added", "Transaction added successfully!");
             } else {

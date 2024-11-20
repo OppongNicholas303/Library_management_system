@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class AddPatronController {
-    Helper helper = new Helper();
 
     @FXML
     private TextField firstNameField;
@@ -31,6 +30,8 @@ public class AddPatronController {
     @FXML
     private Button submitButton;
 
+    Helper helper = new Helper();
+
     @FXML
     private void handleSubmit() {
         Validation validation = new Validation();
@@ -41,7 +42,11 @@ public class AddPatronController {
         patron.setEmail(emailField.getText());
         patron.setContact(contactInfoField.getText());
 
-        if (patron.getFirstName().isEmpty() || patron.getLastName().isEmpty() || patron.getEmail().isEmpty() || patron.getContact().isEmpty()) {
+        if (patron.getFirstName().isEmpty()
+            || patron.getLastName().isEmpty()
+            || patron.getEmail().isEmpty()
+            || patron.getContact().isEmpty()
+        ) {
             helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
         } else if (!validation.isValidEmail(patron.getEmail())) {
             helper.showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid email address.");

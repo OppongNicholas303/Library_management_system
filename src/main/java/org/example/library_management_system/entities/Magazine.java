@@ -4,9 +4,7 @@ public class Magazine extends LibraryItem {
     private String issueNumber;
 
     // Constructor
-    public Magazine(){
-
-    }
+    public Magazine(){}
 
     public Magazine(int itemId, String title, String author, String issueNumber) {
         super(itemId, title, author);

@@ -20,12 +20,13 @@ public class Librarian {
 
     public boolean addItemToDatabase(Book book) {
         try {
-            //Connection connection = DatabaseConnection.getConnection();
-
-            // Modify this query to request generated keys
             String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, book.getTitle(), book.getAuthor(), book.getItemType());
-
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query, true,
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getItemType()
+            );
             int result = preparedStatement.executeUpdate();
 
             if (result > 0) {
@@ -34,9 +35,13 @@ public class Librarian {
                 if (generatedKeys.next()) {
                     int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
 
-                    // Now insert into the book table with the generated itemId
                     String bookQuery = "INSERT INTO book (isbn, publicationYear, bookId) VALUES (?, ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, book.getTitle(), book.getPublicationYear());
+                    PreparedStatement bookPreStatement = helper.performQuery(
+                            bookQuery, false,
+                            book.getTitle(),
+                            book.getPublicationYear()
+                    );
+
                     bookPreStatement.setInt(3, itemId);
 
                     int bookResult = bookPreStatement.executeUpdate();
@@ -52,11 +57,15 @@ public class Librarian {
 
     public boolean addItemToDatabase(Magazine magazine ) {
         try {
-            // Connection connection = DatabaseConnection.getConnection();
-
             // Modify this query to request generated keys
             String query = "INSERT INTO LibraryItem (title, author, itemType) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, true, magazine.getTitle(), magazine.getAuthor(), magazine.getItemType());
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query,
+                    true,
+                    magazine.getTitle(),
+                    magazine.getAuthor(),
+                    magazine.getItemType()
+            );
 
             int result = preparedStatement.executeUpdate();
 
@@ -66,9 +75,12 @@ public class Librarian {
                 if (generatedKeys.next()) {
                     int itemId = generatedKeys.getInt(1); // Retrieve the generated itemId
 
-                    // Now insert into the inheritance table with the generated itemId
                     String bookQuery = "INSERT INTO magazine (issueNumber, magazineId) VALUES ( ?, ?)";
-                    PreparedStatement bookPreStatement = helper.performQuery(bookQuery, false, magazine.getIssueNumber());
+                    PreparedStatement bookPreStatement = helper.performQuery(
+                            bookQuery,
+                            false,
+                            magazine.getIssueNumber()
+                    );
                     bookPreStatement.setInt(2, itemId);
 
                     int bookResult = bookPreStatement.executeUpdate();
@@ -82,18 +94,18 @@ public class Librarian {
         }
     }
 
-    public int register(org.example.library_management_system.entities.Librarian librarian) throws SQLException {
-        String hashedPassword = helper.hashPassword(librarian.getPassword());
-        String query = "INSERT INTO librarian (firstName, lastName, contact,  password, email) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = helper.performQuery(query, false, librarian.getFirstName(), librarian.getLastName(), librarian.getContact(), hashedPassword, librarian.getEmail());
-        return  preparedStatement.executeUpdate();
-    }
-
     public boolean addPatron(Patron patron){
         try {
 
             String query = "INSERT INTO patron (firstName, lastName, email, contact) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = helper.performQuery(query, false, patron.getFirstName(), patron.getLastName(), patron.getEmail(), patron.getContact());
+            PreparedStatement preparedStatement = helper.performQuery(
+                    query,
+                    false,
+                    patron.getFirstName(),
+                    patron.getLastName(),
+                    patron.getEmail(),
+                    patron.getContact()
+            );
 
             int result = preparedStatement.executeUpdate();
 
@@ -106,53 +118,15 @@ public class Librarian {
     }
 
 
-//    public boolean makeTransaction(String patronId, String itemId, String transactionType, LocalDate transactionDate, LocalDate dueDate) throws SQLException {
-//        // Establish the database connection
-//
-//        Connection connection = DatabaseConnection.getConnection();
-//
-//        String IdQuery  = "SELECT availability_status FROM LibraryItem WHERE itemId = ?";
-//
-//        PreparedStatement idPreparedStatement = connection.prepareStatement(IdQuery);
-//        idPreparedStatement.setString(1, itemId);
-//        ResultSet idResultSet = idPreparedStatement.executeQuery();
-//        if(idResultSet.next()){
-//            boolean isAvailable = idResultSet.getBoolean("availability_status");
-//            if(!isAvailable){
-//                helper.showAlert(Alert.AlertType.INFORMATION, "Transaction fail", "Item not available");
-//                return false;
-//            }
-//        }
-//
-//        String query = "INSERT INTO Transaction (patronId, itemId, transactionType, transactionDate, dueDate, returned) VALUES (?, ?, ?, ?, ?, ?)";
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//
-//        // Set parameters for the SQL query
-//        preparedStatement.setInt(1, Integer.parseInt(patronId));
-//        preparedStatement.setInt(2, Integer.parseInt(itemId));
-//        preparedStatement.setString(3, transactionType);
-//
-//        preparedStatement.setDate(4, Date.valueOf(transactionDate)); // Convert LocalDate to Date
-//        preparedStatement.setDate(5, Date.valueOf(dueDate)); // Convert LocalDate to Date
-//        preparedStatement.setBoolean(6, false); // Default value for "returned" field
-//
-//        // Execute the query
-//        int result = preparedStatement.executeUpdate();
-//
-//        if(result > 0){
-//            String updateQuery =  "UPDATE LibraryItem SET availability_status = FALSE WHERE itemId = ?";
-//            PreparedStatement updatePreparedStatement = connection.prepareStatement(updateQuery);
-//
-//            updatePreparedStatement.setInt(1, Integer.parseInt(itemId));
-//            result = updatePreparedStatement.executeUpdate();
-//
-//            return result > 0;
-//
-//        }
-//        return false;
-//    }
 
-    public boolean makeTransaction(String patronId, String itemId, String transactionType, LocalDate transactionDate, LocalDate dueDate) throws SQLException {
+    public boolean makeTransaction(
+            String patronId,
+            String itemId,
+            String transactionType,
+            LocalDate transactionDate,
+            LocalDate dueDate
+    ) throws SQLException {
+
         // Establish the database connection
         Connection connection = DatabaseConnection.getConnection();
 
@@ -173,6 +147,7 @@ public class Librarian {
         PreparedStatement itemPreparedStatement = connection.prepareStatement(itemQuery);
         itemPreparedStatement.setString(1, itemId);
         ResultSet itemResultSet = itemPreparedStatement.executeQuery();
+
         if (itemResultSet.next()) {
             boolean isAvailable = itemResultSet.getBoolean("availability_status");
             if (!isAvailable) {
@@ -215,7 +190,7 @@ public class Librarian {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, reservation.getPatronId());
-        preparedStatement.setInt(2, reservation.getPatronId());
+        preparedStatement.setInt(2, reservation.getItemID());
         preparedStatement.setDate(3, Date.valueOf(reservation.getReservationDate()));
 
         int result = preparedStatement.executeUpdate();
@@ -223,50 +198,28 @@ public class Librarian {
         return result > 0;
     }
 
-    public  boolean returnItem(String itemId, String patronId) throws SQLException {
+
+
+    public boolean returnItem(String itemId, String patronId) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
-//        String query = """
-//            UPDATE Transaction t
-//            JOIN LibraryItem li ON t.itemId = li.itemId
-//            SET t.transactionType = 'Return',
-//                li.availability_status = TRUE
-//            WHERE t.patronId = ? AND t.itemId = ?;
-//        """;
-//
-//        String query = """
-//            UPDATE Transaction t
-//            JOIN LibraryItem li ON t.itemId = li.itemId
-//            SET t.transactionType = 'Return',
-//                li.availability_status = TRUE
-//            WHERE t.itemId = ? AND t.patronId = ?;
-//        """;
 
-        String queryTransaction = """
-            UPDATE Transaction
-            SET transactionType = 'Return'
-            WHERE itemId = ? AND patronId = ?;
-        """;
+        String query = """
+        UPDATE Transaction t
+        JOIN LibraryItem li ON t.itemId = li.itemId
+        SET t.transactionType = 'Return',
+            li.availability_status = TRUE
+        WHERE t.patronId = ? AND t.itemId = ?;
+    """;
 
-        String queryLibraryItem = """
-            UPDATE LibraryItem
-            SET availability_status = TRUE
-            WHERE itemId = ?;
-        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, Integer.parseInt(patronId));
+        preparedStatement.setInt(2, Integer.parseInt(itemId));
 
-        PreparedStatement preparedStatement = connection.prepareStatement(queryTransaction);
-        preparedStatement.setInt(1, Integer.parseInt(itemId));
-        preparedStatement.setInt(2, Integer.parseInt(patronId));
-        int transactionResult = preparedStatement.executeUpdate();
+        // Execute the update query
+        int rowsUpdated = preparedStatement.executeUpdate();
 
-        if(transactionResult > 0){
-            PreparedStatement preparedStatement1 = connection.prepareStatement(queryLibraryItem);
-            preparedStatement1.setInt(1, Integer.parseInt(itemId));
-            int libraryItemnResult = preparedStatement.executeUpdate();
-
-           return libraryItemnResult > 0;
-
-        }
-
-        return false;
+        // Return true if at least one row was updated
+        return rowsUpdated > 0;
     }
+
 }

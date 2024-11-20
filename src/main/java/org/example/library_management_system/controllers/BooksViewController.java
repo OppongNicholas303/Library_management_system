@@ -20,6 +20,9 @@ public class BooksViewController {
     private TableView<Book> booksTable;
 
     @FXML
+    private TableColumn<Book, Integer> bookIdColumn;  // Add column for bookId
+
+    @FXML
     private TableColumn<Book, String> titleColumn;
 
     @FXML
@@ -30,8 +33,9 @@ public class BooksViewController {
 
     private final LinkedList<Book> booksList = new LinkedList<>();
 
-    @FXML
     public void initialize() {
+        // Set cell value factories
+        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("itemId"));  // Set bookId column
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
@@ -43,10 +47,11 @@ public class BooksViewController {
         try {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT title, author, availability_status FROM libraryItem");
+            ResultSet resultSet = statement.executeQuery("SELECT itemId, title, author, availability_status FROM libraryItem"); // Fetch id
 
             while (resultSet.next()) {
                 Book book = new Book();
+                book.setItemId(resultSet.getInt("itemId"));
                 book.setTitle(resultSet.getString("title"));
                 book.setAuthor(resultSet.getString("author"));
                 book.setAvailability(resultSet.getBoolean("availability_status"));
