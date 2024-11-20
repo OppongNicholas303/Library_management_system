@@ -34,6 +34,8 @@ public class ReturnViewController {
            try {
                boolean isUpdated = librarian.returnItem(itemId, patronId);
                if (isUpdated) {
+                   helper.showAlert(Alert.AlertType.ERROR, "Submission successfully", "success.");
+               }else {
                    helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
                }
            } catch (SQLException e) {

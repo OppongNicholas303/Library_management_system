@@ -59,9 +59,6 @@ public class AddTransactionController {
             } else {
                 helper.showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred while adding the transaction.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            helper.showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred while interacting with the database.");
         } catch (Exception e) {
             e.printStackTrace();
             helper.showAlert(Alert.AlertType.ERROR, "Unexpected Error", "An unexpected error occurred.");
