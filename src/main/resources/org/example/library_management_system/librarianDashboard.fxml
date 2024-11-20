@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.library_management_system.DashboardController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.library_management_system.controllers.DashboardController">
     <!-- Header -->
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #34495e; -fx-padding: 10;">
