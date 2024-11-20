@@ -17,26 +17,30 @@
         <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
     </padding>
 
-    <!-- Centered VBox for registration form with increased spacing for better readability -->
+    <!-- VBox for the registration form -->
     <VBox alignment="CENTER" spacing="12.0" prefWidth="320.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <!-- Title text with margin and adjusted font size -->
+
+        <!-- Back Button at the top -->
+        <Button text="Back" fx:id="backButton" onAction="#handleBack" style="-fx-background-color: #f8f9fa; -fx-text-fill: #007bff; -fx-font-weight: bold; -fx-border-color: #007bff; -fx-border-width: 2; -fx-background-radius: 5;"/>
+
+        <!-- Title text -->
         <Text text="Create Your Account" style="-fx-fill: #333333;">
             <font>
                 <Font name="Arial Bold" size="22.0"/>
             </font>
         </Text>
 
-        <!-- Subtitle for better context -->
+        <!-- Subtitle text -->
         <Text text="Join the Library Management System" style="-fx-fill: #555555;">
             <font>
                 <Font name="Arial" size="14.0"/>
             </font>
         </Text>
 
-        <!-- Form fields with labels and input fields grouped together for consistent alignment -->
+        <!-- Form fields -->
         <VBox alignment="CENTER" spacing="8.0" prefWidth="260.0">
             <!-- First Name Field -->
-            <Label text="First Name" style="-fx-text-fill: #555555;"/>
+            <Label text="First Name" style="-fx-text-fill: #555555;" alignment="TOP_LEFT"/>
             <TextField fx:id="firstNameField" promptText="Enter your first name" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
 
             <!-- Last Name Field -->
@@ -56,7 +60,7 @@
             <PasswordField fx:id="passwordField" promptText="Enter your password" maxWidth="260.0" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
         </VBox>
 
-        <!-- Register Button with increased padding and a bold style -->
+        <!-- Register Button -->
         <Button text="Register" fx:id="registerButton" onAction="#handleRegister" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
     </VBox>
 </StackPane>

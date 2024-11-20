@@ -1,4 +1,4 @@
-package org.example.library_management_system.dbconnection;
+package org.example.library_management_system.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

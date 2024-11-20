@@ -14,7 +14,6 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Library Management System");
         stage.setScene(scene);
-
         stage.setMaximized(true);  // Set the window to open maximized
         stage.show();
     }

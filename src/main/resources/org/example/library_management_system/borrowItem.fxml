@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: #f9f9f9; -fx-padding: 40;" fx:controller="org.example.library_management_system.controllers.AddTransactionController">
+    <Label text="Add New Transaction" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+    <GridPane hgap="20" vgap="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #bdc3c7;">
+
+        <!-- Patron -->
+        <Label text="Patron ID:" GridPane.rowIndex="1" />
+        <TextField fx:id="patronIdField" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-size: 16;" maxWidth="300"/>
+
+        <!-- Library Item -->
+        <Label text="Library Item ID:" GridPane.rowIndex="2" />
+        <TextField fx:id="itemIdField" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 16;" maxWidth="300"/>
+
+        <!-- Transaction Type -->
+        <Label text="Transaction Type (Borrow):" GridPane.rowIndex="3" />
+        <TextField fx:id="transactionTypeField" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-size: 16;" maxWidth="300"/>
+
+
+        <!-- Transaction Date -->
+        <Label text="Transaction Date:" GridPane.rowIndex="4" />
+        <DatePicker fx:id="transactionDateField" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-font-size: 16;" maxWidth="300"/>
+
+        <!-- Due Date -->
+        <Label text="Due Date:" GridPane.rowIndex="5" />
+        <DatePicker fx:id="dueDateField" GridPane.columnIndex="1" GridPane.rowIndex="5" style="-fx-font-size: 16;" maxWidth="300"/>
+
+    </GridPane>
+
+    <Button text="Submit" fx:id="submitTransactionButton" style="-fx-font-size: 18; -fx-background-color: #3498db; -fx-text-fill: white; -fx-max-width: 150;" onAction="#handleSubmitTransaction"/>
+</VBox>
