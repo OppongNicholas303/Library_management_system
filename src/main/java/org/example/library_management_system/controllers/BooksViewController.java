@@ -21,21 +21,21 @@ import java.util.LinkedList;
 public class BooksViewController {
 
     @FXML
-    private TableView<Book> booksTable;  // TableView to display books
+    public TableView<Book> booksTable;  // TableView to display books
 
     @FXML
-    private TableColumn<Book, Integer> bookIdColumn;  // Column for book ID
+    public TableColumn<Book, Integer> bookIdColumn;  // Column for book ID
 
     @FXML
-    private TableColumn<Book, String> titleColumn;  // Column for book title
+    public TableColumn<Book, String> titleColumn;  // Column for book title
 
     @FXML
-    private TableColumn<Book, String> authorColumn;  // Column for book author
+    TableColumn<Book, String> authorColumn;  // Column for book author
 
     @FXML
-    private TableColumn<Book, Boolean> availabilityColumn;  // Column for book availability status
+    TableColumn<Book, Boolean> availabilityColumn;  // Column for book availability status
 
-    private final LinkedList<Book> booksList = new LinkedList<>();  // List to hold books fetched from the database
+     LinkedList<Book> booksList = new LinkedList<>();  // List to hold books fetched from the database
 
     /**
      * Initializes the controller and sets up the TableView columns.
@@ -54,7 +54,7 @@ public class BooksViewController {
      * Loads the books from the database and populates the TableView with the data.
      * The data is fetched using a SQL query and added to the booksList.
      */
-    private void loadBooks() {
+    public void loadBooks() {
         try {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();

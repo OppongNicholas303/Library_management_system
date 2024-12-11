@@ -26,28 +26,30 @@ public class AddBookController {
     public TextField publishedDate;  // Input for the publication date of the book
 
     @FXML
-    private TextField titleField;  // Input for the book title
+    public TextField titleField;  // Input for the book title
 
     @FXML
-    private TextField authorField;  // Input for the book author
+    public TextField authorField;  // Input for the book author
 
     @FXML
-    private TextField isbnField;  // Input for the book ISBN
+    public TextField isbnField;  // Input for the book ISBN
 
-    @FXML
+//    @FXML
     private Button submitButton;  // Button to submit the form
 
-    Helper helper = new Helper();  // Helper class for utility functions
-    Librarian librarian = new Librarian();  // Librarian class to manage database actions
+   Helper helper = new Helper();  // Helper class for utility functions
+    Librarian librarian = new Librarian();  // Librarian class to manage database
+    Book book = new Book();
+
 
     /**
      * Handles the submission of book details. Validates input and adds the book to the database.
      */
     @FXML
-    private void handleSubmit() {
+    public void handleSubmit() {
 
         // Create a new Book object and set its properties from the form
-        Book book = new Book();
+
         book.setTitle(titleField.getText());
         book.setItemType(itemTypeField.getText());
         book.setIsbn(isbnField.getText());
@@ -71,5 +73,7 @@ public class AddBookController {
             }
         }
     }
+
+
 
 }

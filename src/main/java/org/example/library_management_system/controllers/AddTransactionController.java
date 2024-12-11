@@ -24,30 +24,43 @@ public class AddTransactionController {
     Librarian librarian = new Librarian();  // Librarian class to manage transaction actions
 
     @FXML
-    private TextField patronIdField;  // Input for the patron ID
+    public TextField patronIdField;  // Input for the patron ID
 
     @FXML
-    private TextField itemIdField;  // Input for the item (book/magazine) ID
+    public TextField itemIdField;  // Input for the item (book/magazine) ID
 
     @FXML
-    private TextField transactionTypeField;  // Input for the transaction type (borrow/return)
+    public TextField transactionTypeField;  // Input for the transaction type (borrow/return)
 
     @FXML
-    private DatePicker transactionDateField;  // DatePicker for the transaction date
+    public DatePicker transactionDateField;  // DatePicker for the transaction date
 
     @FXML
-    private DatePicker dueDateField;  // DatePicker for the due date
+    public DatePicker dueDateField;  // DatePicker for the due date
 
     @FXML
-    private Button submitTransactionButton;  // Button to submit the transaction
+    public Button submitTransactionButton;  // Button to submit the transaction
 
     Helper helper = new Helper();  // Helper class for utility functions
+
+    public AddTransactionController(TextField patronIdField, TextField itemIdField, TextField transactionTypeField, DatePicker transactionDateField, DatePicker dueDateField) {
+        this.patronIdField = patronIdField;
+        this.itemIdField = itemIdField;
+        this.transactionTypeField = transactionTypeField;
+        this.transactionDateField = transactionDateField;
+        this.dueDateField = dueDateField;
+    }
+
+    public AddTransactionController() {
+    }
 
     /**
      * Handles the submission of transaction details. Validates input and adds the transaction to the database.
      */
+
+
     @FXML
-    private void handleSubmitTransaction() {
+    public void handleSubmitTransaction() {
         try {
             // Validate the form fields
             if (patronIdField.getText().isEmpty() || itemIdField.getText().isEmpty() ||

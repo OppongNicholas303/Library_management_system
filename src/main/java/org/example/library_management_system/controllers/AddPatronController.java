@@ -20,30 +20,33 @@ import java.sql.PreparedStatement;
 public class AddPatronController {
 
     @FXML
-    private TextField firstNameField;  // Input for the patron's first name
+    public TextField firstNameField;  // Input for the patron's first name
 
     @FXML
-    private TextField lastNameField;  // Input for the patron's last name
+    public TextField lastNameField;  // Input for the patron's last name
 
     @FXML
-    private TextField emailField;  // Input for the patron's email address
+    public TextField emailField;  // Input for the patron's email address
 
     @FXML
-    private TextField contactInfoField;  // Input for the patron's contact information
+    public TextField contactInfoField;  // Input for the patron's contact information
 
     @FXML
     private Button submitButton;  // Button to submit the form
 
     Helper helper = new Helper();  // Helper class for utility functions
 
+    Librarian librarian = new Librarian();
+
+    Validation validation = new Validation();
+
+    Patron patron = new Patron();
+
     /**
      * Handles the submission of patron details. Validates input and adds the patron to the database.
      */
     @FXML
-    private void handleSubmit() {
-        Validation validation = new Validation();  // Validator for email format
-        Librarian librarian = new Librarian();  // Librarian class to manage database actions
-        Patron patron = new Patron();  // Patron object to hold form data
+    public void handleSubmit() {
 
         // Set the patron's properties from the form fields
         patron.setFirstName(firstNameField.getText());

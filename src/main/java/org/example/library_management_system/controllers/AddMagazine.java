@@ -26,6 +26,7 @@ public class AddMagazine {
 
     Helper helper = new Helper();  // Helper class for utility functions
     Librarian librarian = new Librarian();  // Librarian class to manage database actions
+    Magazine magazine = new Magazine();
 
     /**
      * Handles the submission of magazine details. Validates input and adds the magazine to the database.
@@ -34,7 +35,7 @@ public class AddMagazine {
     public void handleSubmit(ActionEvent actionEvent) {
 
         // Create a new Magazine object and set its properties from the form
-        Magazine magazine = new Magazine();
+
         magazine.setTitle(titleField.getText().trim());
         magazine.setAuthor(authorField.getText().trim());
         magazine.setIssueNumber(issueNumberField.getText());
