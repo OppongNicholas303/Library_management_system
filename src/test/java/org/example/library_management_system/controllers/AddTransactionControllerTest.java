@@ -19,18 +19,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class AddTransactionControllerTest {
+class AddTransactionControllerTest extends JavaFXTest {
     Librarian librarian;
     Helper helper;
     AddTransactionController controller;
 
 
-    @BeforeAll
-    static void setupAll() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
+//    @BeforeAll
+//    static void setupAll() throws InterruptedException{
+//        CountDownLatch latch = new CountDownLatch(1);
+//        Platform.startup(latch::countDown);
+//        latch.await();
+//    }
 
     @BeforeEach
     void setup(){
@@ -92,6 +92,7 @@ class AddTransactionControllerTest {
 
         verify(helper).showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred while adding the transaction.");
     }
+
     @Test
     void testHandleSubmit_AllFieldsEmpty(){
         controller.patronIdField.setText("");

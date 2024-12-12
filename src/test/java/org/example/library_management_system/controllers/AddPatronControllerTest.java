@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class AddPatronControllerTest {
+class AddPatronControllerTest extends JavaFXTest {
     AddPatronController addPatronController;
     Librarian librarianMock;
     Patron patronMock;
@@ -24,12 +24,12 @@ class AddPatronControllerTest {
     Validation validationMock;
 
 
-    @BeforeAll
-    static void setupAll() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
+//    @BeforeAll
+//    static void setupAll() throws InterruptedException{
+//        CountDownLatch latch = new CountDownLatch(1);
+//        Platform.startup(latch::countDown);
+//        latch.await();
+//    }
 
     @BeforeEach
     void setUp() {

@@ -11,6 +11,7 @@ import org.example.library_management_system.entities.Book;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
@@ -75,7 +76,7 @@ public class BooksViewController {
             ObservableList<Book> observableBooksList = FXCollections.observableArrayList(booksList);
             booksTable.setItems(observableBooksList);
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
