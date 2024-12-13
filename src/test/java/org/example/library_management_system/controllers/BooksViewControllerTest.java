@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BooksViewControllerTest extends JavaFXTest{
     private BooksViewController controller;
@@ -94,8 +95,18 @@ class BooksViewControllerTest extends JavaFXTest{
     }
 
     @Test( )
-    void testErrorHandling() throws SQLException {
-    
+    void testErrorHandling(){
+        MockedStatic<DatabaseConnection> dbConnectionMock = mockStatic(DatabaseConnection.class);
+
+        try (dbConnectionMock) {
+            dbConnectionMock.when(DatabaseConnection::getConnection).thenReturn(connectionMock);
+            when(connectionMock.createStatement()).thenReturn(statementMock);
+            when(statementMock.executeQuery(anyString())).thenThrow(new SQLException("Failed to execute query"));
+            statementMock.executeQuery("any query");
+        } catch (SQLException exception) {
+            assertEquals("Failed to execute query", exception.getMessage());
+        }
+
     }
 
 }

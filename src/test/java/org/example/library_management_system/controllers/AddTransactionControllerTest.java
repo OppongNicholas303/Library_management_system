@@ -4,13 +4,18 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import org.example.library_management_system.database.DatabaseConnection;
 import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.concurrent.CountDownLatch;
 
@@ -23,6 +28,9 @@ class AddTransactionControllerTest extends JavaFXTest {
     Librarian librarian;
     Helper helper;
     AddTransactionController controller;
+    Connection connectionMock;
+    Statement statementMock;
+    ResultSet resultSetMock;
 
 
 //    @BeforeAll
@@ -53,6 +61,9 @@ class AddTransactionControllerTest extends JavaFXTest {
 
         controller.helper = helper;
         controller.librarian = librarian;
+        connectionMock = mock(Connection.class);
+        statementMock = mock(Statement.class);
+        resultSetMock = mock(ResultSet.class);
     }
 
     @Test
@@ -98,7 +109,6 @@ class AddTransactionControllerTest extends JavaFXTest {
         controller.patronIdField.setText("");
         controller.itemIdField.setText("");
         controller.transactionTypeField.setText("");
-//        LocalDate transactionDate = LocalDate.of("");
         controller.transactionDateField.setValue(null);
         controller.dueDateField.setValue(null);
 
@@ -106,4 +116,31 @@ class AddTransactionControllerTest extends JavaFXTest {
 
         verify(helper).showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
     }
+
+  @Test
+  void testInitialize() throws SQLException {
+//      MockedStatic<DatabaseConnection> dbConnectionMockedStatic = mockStatic(DatabaseConnection.class);
+//
+//     // dbConnectionMockedStatic.when(DatabaseConnection::getConnection).thenReturn(mock(connectionMock));
+//      when(connectionMock.createStatement()).thenReturn(statementMock);
+//      when(statementMock.executeQuery(anyString())).thenThrow(new SQLException());
+//      statementMock.executeQuery("any query");
+//
+//      controller.handleSubmitTransaction();
+
+
+     try {
+         when(librarian.makeTransaction(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class)))
+                 .thenThrow(new SQLException("Failed to execute query"));
+
+         controller.handleSubmitTransaction();
+     }catch (Exception e){
+         assertEquals("Failed to execute query", e.getMessage());
+         e.printStackTrace();
+         verify(helper).showAlert(Alert.AlertType.ERROR, "Unexpected Error", "An unexpected error occurred.");
+     }
+
+  }
+
 }
+
