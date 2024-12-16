@@ -110,9 +110,7 @@ class RegisterControllerTest extends JavaFXTest {
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> controller.handleBack(actionEvent));
 
-        assertTrue(exception.getCause() instanceof IOException);
-
-
+        assertInstanceOf(IOException.class, exception.getCause());
 
     }
 

@@ -42,12 +42,13 @@ public class Helper {
     }
 
     // Utility method to show alert dialogs
-    public void showAlert(Alert.AlertType alertType, String title, String message) {
+    public Alert showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+        return alert;
     }
 
     public void navigateToScene(String location, ActionEvent event) throws IOException {

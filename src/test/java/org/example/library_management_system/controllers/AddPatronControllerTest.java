@@ -23,14 +23,6 @@ class AddPatronControllerTest extends JavaFXTest {
     Helper helperMock;
     Validation validationMock;
 
-
-//    @BeforeAll
-//    static void setupAll() throws InterruptedException{
-//        CountDownLatch latch = new CountDownLatch(1);
-//        Platform.startup(latch::countDown);
-//        latch.await();
-//    }
-
     @BeforeEach
     void setUp() {
         librarianMock = mock(Librarian.class);
@@ -58,7 +50,6 @@ class AddPatronControllerTest extends JavaFXTest {
         when(patronMock.getContact()).thenReturn("0243911336");
         when(patronMock.getLastName()).thenReturn("Doe");
         when(patronMock.getFirstName()).thenReturn("John");
-
 
         when(validationMock.isValidEmail("john@doe.com")).thenReturn(true);
         when(librarianMock.addPatron(any(Patron.class))).thenReturn(true);

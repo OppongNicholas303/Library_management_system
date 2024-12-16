@@ -138,8 +138,4 @@ class LibraryLoginControllerTest extends JavaFXTest{
         verify(helperMock).showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred while processing your request.");
 
     }
-
-
-
-
 }

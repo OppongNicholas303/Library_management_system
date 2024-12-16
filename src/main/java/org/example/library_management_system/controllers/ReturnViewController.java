@@ -16,10 +16,13 @@ import java.sql.SQLException;
 public class ReturnViewController {
 
     @FXML
-    private TextField patronIdField;  // Input field for patron ID
+    public TextField patronIdField;  // Input field for patron ID
 
     @FXML
-    private TextField itemIdField;  // Input field for item ID
+    public TextField itemIdField;  // Input field for item ID
+
+    Helper helper = new Helper();
+    Librarian librarian = new Librarian();
 
     /**
      * Handles the return item process when the "Return" button is clicked.
@@ -29,7 +32,7 @@ public class ReturnViewController {
      * @param event The action event triggered by clicking the "Return" button.
      */
     @FXML
-    private void handleReturn(ActionEvent event) {
+    public void handleReturn(ActionEvent event) {
         Helper helper = new Helper();
         Librarian librarian = new Librarian();
 

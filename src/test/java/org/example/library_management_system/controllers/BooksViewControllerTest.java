@@ -26,20 +26,16 @@ class BooksViewControllerTest extends JavaFXTest{
 
     @BeforeEach
     void setUp() throws SQLException {
-        // Create mocks for database components
         connectionMock = mock(Connection.class);
         statementMock = mock(Statement.class);
         resultSetMock = mock(ResultSet.class);
         databaseConnectionMock = mock(DatabaseConnection.class);
 
-        // Setup database mock chain
         when(connectionMock.createStatement()).thenReturn(statementMock);
         when(statementMock.executeQuery(anyString())).thenReturn(resultSetMock);
 
-        // Initialize controller
         controller = new BooksViewController();
 
-        // Instead of mocking JavaFX components, create actual instances
         controller.booksTable = new TableView<>();
         controller.bookIdColumn = new TableColumn<>();
         controller.titleColumn = new TableColumn<>();
@@ -49,7 +45,7 @@ class BooksViewControllerTest extends JavaFXTest{
 
     @Test
     void testLoadBooks() throws SQLException {
-        // Setup result set mock to return test data
+
         when(resultSetMock.next())
                 .thenReturn(true)  // First call returns true
                 .thenReturn(false); // Second call returns false to end loop
@@ -62,10 +58,8 @@ class BooksViewControllerTest extends JavaFXTest{
         try (MockedStatic<DatabaseConnection> dbConnectionMock = mockStatic(DatabaseConnection.class)) {
             dbConnectionMock.when(DatabaseConnection::getConnection).thenReturn(connectionMock);
 
-            // Call the method under test
             controller.loadBooks();
 
-            // Verify database interactions
             verify(connectionMock).createStatement();
             verify(statementMock).executeQuery("SELECT itemId, title, author, availability_status FROM libraryItem");
             verify(resultSetMock, times(2)).next();
@@ -78,7 +72,6 @@ class BooksViewControllerTest extends JavaFXTest{
             assertEquals(1, loadedBook.getItemId());
             assertEquals("Test Book", loadedBook.getTitle());
             assertEquals("Test Author", loadedBook.getAuthor());
-            //assertTrue(loadedBook.getAvailability());
         }
     }
 

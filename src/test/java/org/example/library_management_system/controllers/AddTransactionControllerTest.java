@@ -32,14 +32,6 @@ class AddTransactionControllerTest extends JavaFXTest {
     Statement statementMock;
     ResultSet resultSetMock;
 
-
-//    @BeforeAll
-//    static void setupAll() throws InterruptedException{
-//        CountDownLatch latch = new CountDownLatch(1);
-//        Platform.startup(latch::countDown);
-//        latch.await();
-//    }
-
     @BeforeEach
     void setup(){
         librarian = mock(Librarian.class);
@@ -75,7 +67,6 @@ class AddTransactionControllerTest extends JavaFXTest {
         LocalDate transactionDate = LocalDate.of(2023, 5, 15);
         controller.transactionDateField.setValue(transactionDate);
         controller.dueDateField.setValue(transactionDate);
-
 
         when(librarian.makeTransaction(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class)))
                 .thenReturn(true);
@@ -119,15 +110,6 @@ class AddTransactionControllerTest extends JavaFXTest {
 
   @Test
   void testInitialize() throws SQLException {
-//      MockedStatic<DatabaseConnection> dbConnectionMockedStatic = mockStatic(DatabaseConnection.class);
-//
-//     // dbConnectionMockedStatic.when(DatabaseConnection::getConnection).thenReturn(mock(connectionMock));
-//      when(connectionMock.createStatement()).thenReturn(statementMock);
-//      when(statementMock.executeQuery(anyString())).thenThrow(new SQLException());
-//      statementMock.executeQuery("any query");
-//
-//      controller.handleSubmitTransaction();
-
 
      try {
          when(librarian.makeTransaction(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class)))

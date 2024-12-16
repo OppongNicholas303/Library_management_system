@@ -25,14 +25,6 @@ class AddBookControllerTest extends JavaFXTest{
     AddBookController addBook;
     Book bookMock;
 
-
-//    @BeforeAll
-//    static void setupAll() throws InterruptedException{
-//        CountDownLatch latch = new CountDownLatch(1);
-//        Platform.startup(latch::countDown);
-//        latch.await();
-//    }
-
     @BeforeEach
     void setUp() {
         helperMock = mock(Helper.class);
