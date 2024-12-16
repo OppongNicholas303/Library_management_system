@@ -17,7 +17,7 @@ import java.time.LocalDate;
  * transactions, and processing reservations and returns.
  */
 public class Librarian {
-    private Helper helper;  // Helper utility class for showing alerts and performing queries
+    public  Helper helper;  // Helper utility class for showing alerts and performing queries
 
     /**
      * Constructs a Librarian object.

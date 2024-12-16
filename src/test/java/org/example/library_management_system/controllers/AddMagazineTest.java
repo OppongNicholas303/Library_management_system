@@ -17,18 +17,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class AddMagazineTest {
+class AddMagazineTest extends JavaFXTest {
     Helper helperMock;
     Librarian librarianMock;
     AddMagazine addMagazine;
     Magazine magazineMock;
 
-    @BeforeAll
-    static void setupAll() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
+//    @BeforeAll
+//    static void setupAll() throws InterruptedException{
+//        CountDownLatch latch = new CountDownLatch(1);
+//        Platform.startup(latch::countDown);
+//        latch.await();
+//    }
 
     @BeforeEach
     void setUp(){

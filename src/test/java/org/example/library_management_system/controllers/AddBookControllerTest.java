@@ -18,20 +18,12 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class AddBookControllerTest {
+class AddBookControllerTest extends JavaFXTest{
 
     Helper helperMock ;
     Librarian librarianMock;
     AddBookController addBook;
     Book bookMock;
-
-
-    @BeforeAll
-    static void setupAll() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
 
     @BeforeEach
     void setUp() {

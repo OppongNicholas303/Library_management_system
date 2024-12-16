@@ -4,13 +4,18 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import org.example.library_management_system.database.DatabaseConnection;
 import org.example.library_management_system.services.Librarian;
 import org.example.library_management_system.utils.Helper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.concurrent.CountDownLatch;
 
@@ -19,18 +24,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class AddTransactionControllerTest {
+class AddTransactionControllerTest extends JavaFXTest {
     Librarian librarian;
     Helper helper;
     AddTransactionController controller;
-
-
-    @BeforeAll
-    static void setupAll() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
+    Connection connectionMock;
+    Statement statementMock;
+    ResultSet resultSetMock;
 
     @BeforeEach
     void setup(){
@@ -53,6 +53,9 @@ class AddTransactionControllerTest {
 
         controller.helper = helper;
         controller.librarian = librarian;
+        connectionMock = mock(Connection.class);
+        statementMock = mock(Statement.class);
+        resultSetMock = mock(ResultSet.class);
     }
 
     @Test
@@ -64,7 +67,6 @@ class AddTransactionControllerTest {
         LocalDate transactionDate = LocalDate.of(2023, 5, 15);
         controller.transactionDateField.setValue(transactionDate);
         controller.dueDateField.setValue(transactionDate);
-
 
         when(librarian.makeTransaction(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class)))
                 .thenReturn(true);
@@ -92,12 +94,12 @@ class AddTransactionControllerTest {
 
         verify(helper).showAlert(Alert.AlertType.ERROR, "Submission Failed", "An error occurred while adding the transaction.");
     }
+
     @Test
     void testHandleSubmit_AllFieldsEmpty(){
         controller.patronIdField.setText("");
         controller.itemIdField.setText("");
         controller.transactionTypeField.setText("");
-//        LocalDate transactionDate = LocalDate.of("");
         controller.transactionDateField.setValue(null);
         controller.dueDateField.setValue(null);
 
@@ -105,4 +107,22 @@ class AddTransactionControllerTest {
 
         verify(helper).showAlert(Alert.AlertType.ERROR, "Submission Failed", "Please fill in all fields.");
     }
+
+  @Test
+  void testInitialize() throws SQLException {
+
+     try {
+         when(librarian.makeTransaction(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class)))
+                 .thenThrow(new SQLException("Failed to execute query"));
+
+         controller.handleSubmitTransaction();
+     }catch (Exception e){
+         assertEquals("Failed to execute query", e.getMessage());
+         e.printStackTrace();
+         verify(helper).showAlert(Alert.AlertType.ERROR, "Unexpected Error", "An unexpected error occurred.");
+     }
+
+  }
+
 }
+

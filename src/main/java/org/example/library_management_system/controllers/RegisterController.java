@@ -22,43 +22,45 @@ import java.sql.PreparedStatement;
 public class RegisterController {
 
     @FXML
-    private TextField firstNameField;  // Field for librarian's first name
+    public TextField firstNameField;  // Field for librarian's first name
 
     @FXML
-    private TextField lastNameField;   // Field for librarian's last name
+    public TextField lastNameField;   // Field for librarian's last name
 
     @FXML
-    private TextField contactField;    // Field for librarian's contact information
+    public TextField contactField;    // Field for librarian's contact information
 
     @FXML
-    private TextField emailField;      // Field for librarian's email address
+    public TextField emailField;      // Field for librarian's email address
 
     @FXML
-    private PasswordField passwordField;  // Field for librarian's password
+    public PasswordField passwordField;  // Field for librarian's password
 
     @FXML
-    private Button registerButton;     // Button for submitting the registration form
+    public Button registerButton;     // Button for submitting the registration form
 
     public Button backButton;         // Button for navigating back to the homepage
 
-    private Helper helper = new Helper();  // Utility class for helper methods
+    public Helper helper = new Helper();  // Utility class for helper methods
+
+    // Create a new Librarian object and set its properties from the form fields
+    Librarian librarian = new Librarian();
+
+    // Create a validation object
+    Validation validation = new Validation();
 
     /**
      * Handles the registration action when the librarian submits the registration form.
      * Validates the input fields, performs registration, and shows appropriate feedback messages.
      */
     @FXML
-    private void handleRegister() {
-        // Create a new Librarian object and set its properties from the form fields
-        Librarian librarian = new Librarian();
+    public void handleRegister() {
+
         librarian.setFirstName(firstNameField.getText().trim());
         librarian.setLastName(lastNameField.getText().trim());
         librarian.setContact(contactField.getText().trim());
         librarian.setEmail(emailField.getText().trim());
         librarian.setPassword(passwordField.getText().trim());
-
-        // Create a validation object
-        Validation validation = new Validation();
 
         // Check if any field is empty or if input values are invalid
         if (librarian.getFirstName().isEmpty() || librarian.getLastName().isEmpty() ||
@@ -81,6 +83,7 @@ public class RegisterController {
                 } else {
                     // If registration fails, log the failure
                     System.out.println("Registration failed.");
+
                 }
             } catch (Exception e) {
                 // Log any exceptions encountered during registration

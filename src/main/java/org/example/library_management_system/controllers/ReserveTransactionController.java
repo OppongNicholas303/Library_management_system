@@ -17,13 +17,18 @@ import java.time.LocalDate;
 public class ReserveTransactionController {
 
     @FXML
-    private TextField patronIdField;  // Input field for patron ID
+    public TextField patronIdField;  // Input field for patron ID
 
     @FXML
-    private TextField itemIdField;  // Input field for item ID
+    public TextField itemIdField;  // Input field for item ID
 
     @FXML
-    private DatePicker reservationDateField;  // DatePicker for selecting reservation date
+    public DatePicker reservationDateField;  // DatePicker for selecting reservation date
+
+    // Create a new reservation object
+   public Reservation reservation = new Reservation();
+    public Librarian librarian = new Librarian();
+   public Helper helper = new Helper();
 
     /**
      * Handles the logic for reserving an item when the "Reserve" button is clicked.
@@ -31,12 +36,7 @@ public class ReserveTransactionController {
      * the Librarian service.
      */
     @FXML
-    private void handleReserveItem() {
-        // Create a new reservation object
-        Reservation reservation = new Reservation();
-        Librarian librarian = new Librarian();
-        Helper helper = new Helper();
-
+    public void handleReserveItem() {
         // Set reservation details from the user input
         reservation.setPatron(Integer.parseInt(patronIdField.getText()));  // Set patron ID
         reservation.setItem(Integer.parseInt(itemIdField.getText()));  // Set item ID

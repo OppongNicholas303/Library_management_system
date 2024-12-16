@@ -23,18 +23,18 @@ import java.sql.SQLException;
 public class LibraryLoginController {
 
     @FXML
-    private Button backButton;  // Button to navigate back to the homepage
+    public Button backButton;  // Button to navigate back to the homepage
 
     @FXML
-    private TextField usernameField;  // TextField for entering username (email)
+    public TextField usernameField;  // TextField for entering username (email)
 
     @FXML
-    private PasswordField passwordField;  // PasswordField for entering password
+    public PasswordField passwordField;  // PasswordField for entering password
 
     @FXML
-    private Button loginButton;  // Button to submit login credentials
+    public Button loginButton;  // Button to submit login credentials
 
-    private final Helper helper = new Helper();  // Helper object to handle utility tasks like alerts and navigation
+    Helper helper = new Helper();  // Helper object to handle utility tasks like alerts and navigation
 
     /**
      * Handles the login process. Validates the input fields and checks the credentials
@@ -43,7 +43,7 @@ public class LibraryLoginController {
      * @param event The ActionEvent triggered when the login button is clicked.
      */
     @FXML
-    private void handleLogin(ActionEvent event) {
+    public void handleLogin(ActionEvent event) {
 
         String email = usernameField.getText();
         String password = passwordField.getText();
@@ -73,9 +73,9 @@ public class LibraryLoginController {
                     helper.showAlert(AlertType.INFORMATION, "Invalid Credentials", "Email or password is wrong");
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                helper.showAlert(AlertType.ERROR, "Database Error", "An error occurred while processing your request.");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Input failed");
             }
         }
     }
